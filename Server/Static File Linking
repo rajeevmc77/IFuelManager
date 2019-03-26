@@ -1,0 +1,6 @@
+python manage.py collectstatic
+
+static files issue - https://stackoverflow.com/questions/24199029/django-cannot-find-static-files-need-a-second-pair-of-eyes-im-going-crazy
+
+
+pip install gevent-socketio

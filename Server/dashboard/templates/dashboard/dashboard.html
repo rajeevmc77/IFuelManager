@@ -1,0 +1,49 @@
+<!--{% load staticfiles %}-->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Car Dashboard </title>
+    <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}"/>
+</head>
+<body>
+ <h1> OBD Car Dashboard </h1>
+ <button onclick="loadAjaxData()"> Refresh Car Data</button>
+ <br>
+<!--<ul>-->
+    <!--{% for obdData in CarOBDData %}-->
+
+     <!--<li> {{ obdData }} </li>-->
+
+    <!--{% endfor %}-->
+<!--</ul>-->
+<div>
+ <table id="obdData" class="display" style="width:60%">
+     <thead>
+     <tr>
+         <th>VIN</th>
+         <th>RPM</th>
+         <th>Speed</th>
+         <th>FuelTankLevel</th>
+     </tr>
+     </thead>
+     <tfoot>
+     <!--<tr>-->
+         <!--<th>VIN</th>-->
+         <!--<th>RPM</th>-->
+         <!--<th>Speed</th>-->
+         <!--<th>FuelTankLevel</th>-->
+     <!--</tr>-->
+     </tfoot>
+ </table>
+</div>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" src=" {% static '/DataTables/datatables.min.js' %}"></script>
+<!--<script type="text/javascript" src=" {% static 'js/socket.io.js' %}"></script>-->
+<script src="{% static 'dashboard/app.js' %}"></script>
+
+
+</body>
+</html>
