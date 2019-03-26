@@ -1,49 +1,49 @@
-<!--{% load staticfiles %}-->
+{% extends 'index.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> Car Dashboard </title>
-    <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}"/>
-</head>
-<body>
- <h1> OBD Car Dashboard </h1>
- <button onclick="loadAjaxData()"> Refresh Car Data</button>
- <br>
-<!--<ul>-->
-    <!--{% for obdData in CarOBDData %}-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title> Car Dashboard </title>-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}"/>-->
+<!--</head>-->
+<!--<body>-->
+ <!--<h1> OBD Car Dashboard </h1>-->
+ <!--<button onclick="loadAjaxData()"> Refresh Car Data</button>-->
+ <!--<br>-->
+<!--&lt;!&ndash;<ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;{% for obdData in CarOBDData %}&ndash;&gt;-->
 
-     <!--<li> {{ obdData }} </li>-->
+     <!--&lt;!&ndash;<li> {{ obdData }} </li>&ndash;&gt;-->
 
-    <!--{% endfor %}-->
-<!--</ul>-->
-<div>
- <table id="obdData" class="display" style="width:60%">
-     <thead>
-     <tr>
-         <th>VIN</th>
-         <th>RPM</th>
-         <th>Speed</th>
-         <th>FuelTankLevel</th>
-     </tr>
-     </thead>
-     <tfoot>
+    <!--&lt;!&ndash;{% endfor %}&ndash;&gt;-->
+<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+<!--<div>-->
+ <!--<table id="obdData" class="display" style="width:60%">-->
+     <!--<thead>-->
      <!--<tr>-->
          <!--<th>VIN</th>-->
          <!--<th>RPM</th>-->
          <!--<th>Speed</th>-->
          <!--<th>FuelTankLevel</th>-->
      <!--</tr>-->
-     </tfoot>
- </table>
-</div>
-<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-<script type="text/javascript" src=" {% static '/DataTables/datatables.min.js' %}"></script>
-<!--<script type="text/javascript" src=" {% static 'js/socket.io.js' %}"></script>-->
-<script src="{% static 'dashboard/app.js' %}"></script>
+     <!--</thead>-->
+     <!--<tfoot>-->
+     <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+         <!--&lt;!&ndash;<th>VIN</th>&ndash;&gt;-->
+         <!--&lt;!&ndash;<th>RPM</th>&ndash;&gt;-->
+         <!--&lt;!&ndash;<th>Speed</th>&ndash;&gt;-->
+         <!--&lt;!&ndash;<th>FuelTankLevel</th>&ndash;&gt;-->
+     <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+     <!--</tfoot>-->
+ <!--</table>-->
+<!--</div>-->
+<!--<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>-->
+<!--<script type="text/javascript" src=" {% static '/DataTables/datatables.min.js' %}"></script>-->
+<!--&lt;!&ndash;<script type="text/javascript" src=" {% static 'js/socket.io.js' %}"></script>&ndash;&gt;-->
+<!--<script src="{% static 'dashboard/app.js' %}"></script>-->
 
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

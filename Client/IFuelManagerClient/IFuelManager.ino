@@ -9,7 +9,7 @@
 #include <FreematicsPlus.h>
 #include <httpd.h>
 #include "config.h"
-#include "telelogger.h"
+#include "telelogger.h" 
 #include "teleclient.h"
 #ifdef BOARD_HAS_PSRAM
 #include "esp_himem.h"
@@ -29,7 +29,7 @@
 #define STATE_OBD_FOUND 0x80
 #define STATE_STANDBY 0x100
 
-typedef struct {
+typedef struct {   
   byte pid;
   byte tier;
   char strPID[20];
