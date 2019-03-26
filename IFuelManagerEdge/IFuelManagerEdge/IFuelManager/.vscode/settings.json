@@ -1,6 +1,0 @@
-{
-    "terminal.integrated.env.linux": {
-        "PATH": "/home/user/.platformio/penv/bin:/home/user/.platformio/penv:/home/user/bin:/home/user/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/rajeev/downloads/SlimerJs/slimerjs-1.0.0:/usr/lib/postgresql/9.5/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/rajeev/downloads/SlimerJs/slimerjs-1.0.0:/usr/lib/postgresql/9.5/lib:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin",
-        "PLATFORMIO_CALLER": "vscode"
-    }
-}
