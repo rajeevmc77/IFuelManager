@@ -1,1 +1,3 @@
-# IFuelManager
+# iFuelManager
+iFuelManager is an IOT based  project that analyse the Fuel consumption in an OBD2 compatible vehicle. RealTime Fuel Data is captured from vehicle through ESP32 and ELM317 micro controllers and are uploaded in a cloud server for further processing. The project aims at detecting potential fuel leaks, excessive fuel consumption due to wrong driving patterns and or driving conditions. The system is also designed to warn the users / owners about the potential fuel mis use. 
+The project is a endeavour from 4 B Tech final semester degree students (Akshara Gireesh Murali, Neha, Nidhi and Akshaya) to save the planet by reducing fuel consumption where possible.
