@@ -30,32 +30,23 @@ class CarOBDDataView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        data = self.getJSONFromRawData(request)
-        if data['FuelTankLevel'] == -1:
+        data = self.getJSON(request)
+        print('data')
+        print(data)
+        if data['FuelTankLevel'] == 0:
             data['FuelTankLevel'] = self.getProjectedRemainingFuel(data)
-        print (data)
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
     def getJSON(self,request):
         jsondata = request.body.decode("utf-8").rstrip('\x00')
         data = json.loads(jsondata)
         return  data
 
-    def getJSONFromRawData(self,request):
-        try:
-            data = request.data
-            if isinstance(data, dict):
-                if not data:
-                    data = self.getJSON(request)
-            else:
-                data = self.getJSON(request)
-        except:
-            data = self.getJSON(request)
-        return data
 
     def getProjectedRemainingFuel(self,data):
         projectedRemainingFuel = 85

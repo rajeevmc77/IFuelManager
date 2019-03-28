@@ -1062,7 +1062,7 @@ if (state.check(STATE_OBD_READY)) {
   }
 #elif ENABLE_OBD
   float v;
-  obd.begin();
+  obd.begin(sys.link);
   do {
     delay(5000);
   } while (obd.getVoltage() < JUMPSTART_VOLTAGE);

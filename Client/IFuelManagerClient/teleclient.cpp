@@ -23,7 +23,7 @@ bool processCommand(char* data);
 
 extern char devid[];
 extern char vin[];
-extern GPS_DATA* gd;
+// extern GPS_DATA* gd;
 extern char isoTime[];
 
 bool TeleClientUDP::verifyChecksum(char* data)
@@ -241,13 +241,13 @@ bool TeleClientHTTP::transmit(const char* packetBuffer, unsigned int packetSize)
   }
 
   char url[256];
-  if (gd && gd->ts) {
-    sprintf(url, "%s?id=%s&timestamp=%s&lat=%f&lon=%f&altitude=%d&speed=%f&heading=%d",
-      SERVER_PATH, devid, isoTime,
-      gd->lat, gd->lng, (int)gd->alt, gd->speed, (int)gd->heading);
-  } else {
-    sprintf(url, "%s?id=%s", SERVER_PATH, devid);
-  }
+  // if (gd && gd->ts) {
+  //   sprintf(url, "%s?id=%s&timestamp=%s&lat=%f&lon=%f&altitude=%d&speed=%f&heading=%d",
+  //     SERVER_PATH, devid, isoTime,
+  //     gd->lat, gd->lng, (int)gd->alt, gd->speed, (int)gd->heading);
+  // } else {
+  //   sprintf(url, "%s?id=%s", SERVER_PATH, devid);
+  // }
 
   lastSentTime = millis();
   int ret;

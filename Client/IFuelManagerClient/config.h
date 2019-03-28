@@ -82,7 +82,7 @@
 **************************************/
 #ifndef STORAGE
 // change the following line to change storage type
-#define STORAGE STORAGE_SD
+#define STORAGE STORAGE_NONE //STORAGE_SD
 #endif
 
 #define RAM_CACHE_SIZE 1024 /* bytes */
@@ -92,7 +92,7 @@
 **************************************/
 #define ENABLE_ORIENTATION 0
 #ifndef MEMS_MODE
-#define MEMS_MODE MEMS_9DOF
+#define MEMS_MODE MEMS_DISABLED //MEMS_9DOF
 #endif
 
 /**************************************
@@ -100,7 +100,7 @@
 **************************************/
 #ifndef ENABLE_GPS
 // change the following line to enable (1)/disable (0) GPS
-#define ENABLE_GPS 1
+#define ENABLE_GPS 0
 #endif
 #define GPS_SERIAL_BAUDRATE 115200L
 #define GPS_MOTION_TIMEOUT 180 /* seconds */
