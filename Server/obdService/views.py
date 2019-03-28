@@ -64,10 +64,14 @@ class CarOBDDataView(APIView):
             previousReading = 81
         else:
             previousReading = previousReading[0][0]
-        projectedRemainingFuel = previousReading
-        print (previousReading)
+        fuelTankVolume = CarProfile.objects.filter(VIN=data['VIN']).values_list('FuelTankVolume')
+        if not fuelTankVolume:
+            fuelTankVolume = 35
+        else:
+            fuelTankVolume= fuelTankVolume[0][0]
+        projectedRemainingFuel = previousReading - (0.005/ fuelTankVolume)
 
-        return projectedRemainingFuel;
+        return projectedRemainingFuel
 
 class CarJSONOBDDataView(APIView):
     """

@@ -5,3 +5,5 @@
 
 [int(i[0]) for i in CarJSONOBDData.objects.values_list('RPM','Speed').order_by('created_at')][:10]
 
+CarProfile.objects.filter(VIN='ABC123').values_list('FuelTankVolume')
+
