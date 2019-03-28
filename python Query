@@ -1,0 +1,7 @@
+[i[0] for i in CarJSONOBDData.objects.values_list('RPM','Speed')]
+
+[i[0] for i in CarJSONOBDData.objects.values_list('RPM','Speed')][:10]
+[i[0] for i in CarJSONOBDData.objects.values_list('RPM','Speed').order_by('-created_at')][:10]
+
+[int(i[0]) for i in CarJSONOBDData.objects.values_list('RPM','Speed').order_by('created_at')][:10]
+

@@ -419,8 +419,9 @@ int CLink_SPI::sendCommand(const char* cmd, char* buf, int bufsize, unsigned int
 		n = receive(buf, bufsize, timeout);
 		if (n == -1) {
 			t = millis();
-			Serial.print('_');
-			continue;
+            return -1;
+			// Serial.print('_');
+			// continue;
 		}
 		if (n == 0 || (buf[1] != 'O' && !memcmp(buf + 5, "NO DATA", 7))) {
 			// data not ready

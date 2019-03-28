@@ -38,11 +38,25 @@ class CarOBDDataView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        print (request.data);
+        d = request.data
+        d["FuelTankLevel"] = 50
+        print (d)
         serializer = CarOBDDataSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def getJSONFromRawData(self,request):
+    #     try:
+    #         if isinstance(ele, dict):
+    #         serializer = CarOBDDataSerializer(data=request.data)
+    #
+    #     except:
+
+
+
 
 
 class CarJSONOBDDataView(APIView):

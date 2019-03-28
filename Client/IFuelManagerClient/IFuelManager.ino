@@ -40,6 +40,7 @@ typedef struct {
 PID_POLLING_INFO obdData[]= {
   {PID_SPEED, 1, "Speed" },
   {PID_RPM, 1, "RPM"},
+  {PID_FUEL_LEVEL, 1, "FuelTankLevel"},
   // {PID_THROTTLE, 1, "Throttle"},
   // {PID_ENGINE_LOAD, 1,"EngineLoad"},
   // {PID_FUEL_PRESSURE, 2, "FuelPressure"},
