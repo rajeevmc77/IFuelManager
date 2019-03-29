@@ -33,7 +33,7 @@ class CarOBDDataView(APIView):
         data = self.getJSON(request)
         print('data')
         print(data)
-        if data['FuelTankLevel'] == 0:
+        if data['FuelTankLevel'] == '0':
             data['FuelTankLevel'] = self.getProjectedRemainingFuel(data)
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
@@ -44,12 +44,13 @@ class CarOBDDataView(APIView):
 
     def getJSON(self,request):
         jsondata = request.body.decode("utf-8").rstrip('\x00')
+        print(jsondata)
         data = json.loads(jsondata)
         return  data
 
 
     def getProjectedRemainingFuel(self,data):
-        projectedRemainingFuel = 85
+
         previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1];
         if not previousReading:
             previousReading = 81
@@ -62,6 +63,7 @@ class CarOBDDataView(APIView):
             fuelTankVolume= fuelTankVolume[0][0]
         projectedRemainingFuel = previousReading - (0.005/ fuelTankVolume)
 
+        print(projectedRemainingFuel)
         return projectedRemainingFuel
 
 class CarJSONOBDDataView(APIView):

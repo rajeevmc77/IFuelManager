@@ -799,11 +799,7 @@ char * getFormatedOBDData(){
     char tempBuff[128] ={0};
     sprintf(tempBuff,"\"%s\":\"%d\",",obdData[i].strPID , obdData[i].value);  
     strcat(formatedOBDBuff,tempBuff);    
-  }
-  // n = strlen(formatedOBDBuff) - 1;
-  // formatedOBDBuff[n] = '\0';  
-  Serial.print("formatedOBDBuff : ");
-  Serial.println(formatedOBDBuff);
+  }  
   return formatedOBDBuff;
 }
 
@@ -897,12 +893,12 @@ void process()
 
     char * data = getFormatedOBDData();
     char * jsonBuffer = new char[strlen(data) + 100 ];
-    Serial.print("Cache Size : "); 
-    Serial.print(strlen(jsonBuffer)); 
-    Serial.print(" "); 
+    // Serial.print("Cache Size : "); 
+    // Serial.print(strlen(jsonBuffer)); 
+    // Serial.print(" "); 
     sprintf(jsonBuffer, "{ %s \"VIN\":\"%s\" } ", data, vin);
-    Serial.print("JSON String : ");
-    Serial.println(jsonBuffer);
+    // Serial.print("JSON String : ");
+    // Serial.println(jsonBuffer);
      if (teleClient.transmit(jsonBuffer, strlen(jsonBuffer) + 1 )) {   
       // successfully sent
       connErrors = 0;

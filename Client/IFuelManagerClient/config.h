@@ -58,7 +58,7 @@
 #endif
 #endif
 
-#define SERVER_PATH "/api/post/"
+#define SERVER_PATH "/api/obdData/"
 
 #define WIFI_AP_SSID "TELELOGGER"
 #define WIFI_AP_PASSWORD "PASSWORD"

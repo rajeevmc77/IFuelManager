@@ -241,6 +241,7 @@ bool TeleClientHTTP::transmit(const char* packetBuffer, unsigned int packetSize)
   }
 
   char url[256];
+  sprintf(url, "%s?id=%s", SERVER_PATH, devid);
   // if (gd && gd->ts) {
   //   sprintf(url, "%s?id=%s&timestamp=%s&lat=%f&lon=%f&altitude=%d&speed=%f&heading=%d",
   //     SERVER_PATH, devid, isoTime,
