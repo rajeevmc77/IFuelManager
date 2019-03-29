@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import json
 import datetime as dt
+import pytz
 
 from .models import CarOBDData, CarJSONOBDData, CarProfile
 from .serializers import CarOBDDataSerializer, CarJSONOBDDataSerializer
@@ -33,7 +34,6 @@ class CarOBDDataView(APIView):
     def post(self, request, format=None):
 
         data = self.getJSON(request)
-        print(data['FuelTankLevel'])
         if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = self.getProjectedRemainingFuel(data)
         serializer = CarOBDDataSerializer(data=data)
@@ -45,21 +45,20 @@ class CarOBDDataView(APIView):
 
     def getJSON(self,request):
         jsondata = request.body.decode("utf-8").rstrip('\x00')
-        print(jsondata)
         data = json.loads(jsondata)
         return  data
 
 
     def getProjectedRemainingFuel(self,data):
-        previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1];
+        previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel','created_at').order_by('-created_at')[:1];
         if not previousReading:
             previousReading = 81
+            lastKnownReadTime = dt.datetime.now()
         else:
-            print ("previous Reading")
-            print (previousReading)
             #print (data['created_at'])
-            #lastKnownReadTime = previousReading[0][1]
+            lastKnownReadTime = previousReading[0][1]
             previousReading = previousReading[0][0]
+
         fuelTankVolume = CarProfile.objects.filter(VIN=data['VIN']).values_list('FuelTankVolume')
         if not fuelTankVolume:
             fuelTankVolume = 35
@@ -69,10 +68,17 @@ class CarOBDDataView(APIView):
         if not lastKnownReadTime:
             projectedRemainingFuel = previousReading - (0.005 / fuelTankVolume)
         else:
-            #secondsElapsed = (data['created_at']) - lastKnownReadTime).total_seconds()
-            projectedRemainingFuel = previousReading - (0.005 / fuelTankVolume)
+            utc = pytz.UTC
+            now = utc.localize(dt.datetime.now())
+            if not lastKnownReadTime.tzinfo:
+                lastKnownReadTime=utc.localize(lastKnownReadTime)
+            secondsElapsed = (now - lastKnownReadTime ).total_seconds()
+            adjustmentMultiplier = 0
+            if secondsElapsed < 60:
+                adjustmentMultiplier = 1
 
-        print(projectedRemainingFuel)
+            projectedRemainingFuel = previousReading - ( (0.005 / fuelTankVolume) * adjustmentMultiplier * secondsElapsed )
+        print( previousReading - projectedRemainingFuel)
         return projectedRemainingFuel
 
 class CarJSONOBDDataView(APIView):
