@@ -10,7 +10,7 @@ import json
 import datetime as dt
 import pytz
 
-from .models import CarOBDData, CarJSONOBDData, CarProfile
+from .models import CarOBDData,  CarProfile
 from .serializers import CarOBDDataSerializer
 
 class CarOBDDataView(APIView):

@@ -48,22 +48,3 @@ class CarOBDData(models.Model):
     def __str__(self):
         return "{} - {} - {}  - {}".format(self.VIN, self.RPM, self.Speed, self.FuelTankLevel)
 
-class CarJSONOBDData(models.Model):
-    class Meta:
-        verbose_name = 'CarJSONOBDData'
-        verbose_name_plural = 'CarJSONOBDData'
-
-    # car Speed
-    Speed = models.CharField(max_length=4, null=False, default=" ")
-    # car RPM
-    RPM = models.CharField(max_length=4, null=False, default=" ")
-    # car VIN
-    VIN = models.CharField(max_length=20, null=False, default="VIN1")
-
-    # object created Time
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    # object updated Time
-    #updated_at = models.DateTimeField(auto_now=True, blank=True)
-
-    def __str__(self):
-        return "{} - {} - {} ".format(self.VIN, self.Speed, self.RPM)
