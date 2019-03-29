@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CarOBDData, CarJSONOBDData
+from .models import CarOBDData
 
 
 class CarOBDDataSerializer(serializers.ModelSerializer):
@@ -7,7 +7,4 @@ class CarOBDDataSerializer(serializers.ModelSerializer):
         model = CarOBDData
         fields = ("VIN", "Speed", "RPM", "FuelTankLevel")
 
-class CarJSONOBDDataSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarJSONOBDData
-        fields = ("Speed", "RPM","VIN")
+

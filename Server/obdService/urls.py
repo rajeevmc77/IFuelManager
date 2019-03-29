@@ -17,12 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import path, include
 
-from obdService.views import CarOBDDataView,  CarJSONOBDDataView
+from obdService.views import CarOBDDataView
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('', include('obdService.urls'))
      path('', CarOBDDataView.as_view(), name="carObdData"),
      path('api/obdData/', CarOBDDataView.as_view(), name="carObdData"),
-     path('api/post/', CarJSONOBDDataView.as_view(), name="carjsonObdData")
 ]

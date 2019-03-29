@@ -11,7 +11,7 @@ import datetime as dt
 import pytz
 
 from .models import CarOBDData, CarJSONOBDData, CarProfile
-from .serializers import CarOBDDataSerializer, CarJSONOBDDataSerializer
+from .serializers import CarOBDDataSerializer
 
 class CarOBDDataView(APIView):
     """
@@ -81,33 +81,3 @@ class CarOBDDataView(APIView):
         print( previousReading - projectedRemainingFuel)
         return projectedRemainingFuel
 
-class CarJSONOBDDataView(APIView):
-    """
-    View to list all users in the system.
-
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAdminUser,)
-    """
-
-    def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
-        carprofiles = CarJSONOBDData.objects.all()
-        serializer = CarJSONOBDDataSerializer(carprofiles, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        print(request.body);
-        # print(request.data);
-        print(request.body.decode("utf-8").rstrip('\x00'));
-        jsondata = request.body.decode("utf-8").rstrip('\x00')
-        d = json.loads(jsondata)
-        serializer = CarJSONOBDDataSerializer(data=d)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        #return Response(serializer.data, status=status.HTTP_201_CREATED)
