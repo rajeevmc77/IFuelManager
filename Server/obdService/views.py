@@ -77,7 +77,7 @@ class CarOBDDataView(APIView):
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1
 
-            projectedRemainingFuel = previousReading - ( (0.005 / fuelTankVolume) * adjustmentMultiplier * secondsElapsed )
+            projectedRemainingFuel = previousReading - ((0.005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
         print( previousReading - projectedRemainingFuel)
         return projectedRemainingFuel
 
