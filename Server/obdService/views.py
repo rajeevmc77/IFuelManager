@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import json
+import datetime as dt
 
 from .models import CarOBDData, CarJSONOBDData, CarProfile
 from .serializers import CarOBDDataSerializer, CarJSONOBDDataSerializer
@@ -30,10 +31,10 @@ class CarOBDDataView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+
         data = self.getJSON(request)
-        print('data')
-        print(data)
-        if data['FuelTankLevel'] == '0':
+        print(data['FuelTankLevel'])
+        if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = self.getProjectedRemainingFuel(data)
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
@@ -50,18 +51,26 @@ class CarOBDDataView(APIView):
 
 
     def getProjectedRemainingFuel(self,data):
-
         previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1];
         if not previousReading:
             previousReading = 81
         else:
+            print ("previous Reading")
+            print (previousReading)
+            #print (data['created_at'])
+            #lastKnownReadTime = previousReading[0][1]
             previousReading = previousReading[0][0]
         fuelTankVolume = CarProfile.objects.filter(VIN=data['VIN']).values_list('FuelTankVolume')
         if not fuelTankVolume:
             fuelTankVolume = 35
         else:
             fuelTankVolume= fuelTankVolume[0][0]
-        projectedRemainingFuel = previousReading - (0.005/ fuelTankVolume)
+
+        if not lastKnownReadTime:
+            projectedRemainingFuel = previousReading - (0.005 / fuelTankVolume)
+        else:
+            #secondsElapsed = (data['created_at']) - lastKnownReadTime).total_seconds()
+            projectedRemainingFuel = previousReading - (0.005 / fuelTankVolume)
 
         print(projectedRemainingFuel)
         return projectedRemainingFuel
