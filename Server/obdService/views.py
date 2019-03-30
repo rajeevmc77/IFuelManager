@@ -35,7 +35,9 @@ class CarOBDDataView(APIView):
 
         data = self.getJSON(request)
         if int(data['FuelTankLevel']) == 0:
-            data['FuelTankLevel'] = self.getProjectedRemainingFuel(data)
+            remainingFuel = self.getProjectedRemainingFuel(data)
+            data['FuelTankLevel'] = remainingFuel[0]
+            data['SecondsElapsed'] = remainingFuel[1]
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -48,9 +50,13 @@ class CarOBDDataView(APIView):
         data = json.loads(jsondata)
         return  data
 
+    def getFuelUsageTrend(self):
+        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel', 'created_at').order_by('-created_at')[:10]
+
+
 
     def getProjectedRemainingFuel(self,data):
-        previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel','created_at').order_by('-created_at')[:1];
+        previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel','created_at').order_by('-created_at')[:1]
         if not previousReading:
             previousReading = 81
             lastKnownReadTime = dt.datetime.now()
@@ -78,6 +84,5 @@ class CarOBDDataView(APIView):
                 adjustmentMultiplier = 1
 
             projectedRemainingFuel = previousReading - ((0.005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
-        print( previousReading - projectedRemainingFuel)
-        return projectedRemainingFuel
+        return ( projectedRemainingFuel, secondsElapsed )
 

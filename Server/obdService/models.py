@@ -43,6 +43,10 @@ class CarOBDData(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     # object updated Time
     #updated_at = models.DateTimeField(auto_now=True, blank=True)
+    #usage Trend for the last 10 samples
+    FuelUsageTrend = models.FloatField(null=False, default=0)
+    # seconds Elapsed from Last Read
+    SecondsElapsed = models.FloatField(null=False, default=0)
 
 
     def __str__(self):
