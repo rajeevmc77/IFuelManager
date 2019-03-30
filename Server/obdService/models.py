@@ -46,7 +46,7 @@ class CarOBDData(models.Model):
     #usage Trend for the last 10 samples
     FuelUsageTrend = models.FloatField(null=False, default=0)
     # seconds Elapsed from Last Read
-    SecondsElapsed = models.FloatField(null=False, default=0)
+    SecondsElapsed = models.FloatField(null=False, default=1)
 
 
     def __str__(self):

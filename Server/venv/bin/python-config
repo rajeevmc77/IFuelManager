@@ -1,4 +1,4 @@
-#!/rajeev/Vehicle Telemetry/Server/venv/bin/python
+#!/rajeev/Vehicle Telemetry/IFuelManager/Server/venv/bin/python
 
 import sys
 import getopt

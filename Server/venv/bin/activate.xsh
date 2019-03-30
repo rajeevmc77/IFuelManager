@@ -25,7 +25,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/rajeev/Vehicle Telemetry/Server/venv"
+$VIRTUAL_ENV = r"/rajeev/Vehicle Telemetry/IFuelManager/Server/venv"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

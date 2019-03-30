@@ -9,6 +9,7 @@ from rest_framework import status
 import json
 import datetime as dt
 import pytz
+from scipy.stats import linregress
 
 from .models import CarOBDData,  CarProfile
 from .serializers import CarOBDDataSerializer
@@ -35,9 +36,11 @@ class CarOBDDataView(APIView):
 
         data = self.getJSON(request)
         if int(data['FuelTankLevel']) == 0:
-            remainingFuel = self.getProjectedRemainingFuel(data)
-            data['FuelTankLevel'] = remainingFuel[0]
-            data['SecondsElapsed'] = remainingFuel[1]
+            remainingFuelData = self.getProjectedRemainingFuel(data)
+            data['FuelTankLevel'] = remainingFuelData[0]
+            data['SecondsElapsed'] = remainingFuelData[1]
+            trendinputData = {'VIN': data['VIN'],'FuelTankLevel': remainingFuelData[0], 'SecondsElapsed': remainingFuelData[1]}
+            self.getFuelUsageTrend(trendinputData)
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -50,8 +53,17 @@ class CarOBDDataView(APIView):
         data = json.loads(jsondata)
         return  data
 
-    def getFuelUsageTrend(self):
-        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel', 'created_at').order_by('-created_at')[:10]
+    def getFuelUsageTrend(self, data):
+        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).exclude(SecondsElapsed=0).values_list('FuelTankLevel', 'SecondsElapsed').order_by('-created_at')[:10]
+        if fuelreadingSamples:
+            fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
+            elapsedTimeFromLastRead = [item[1] for item in fuelreadingSamples]
+            fuelUsageTrend = linregress(elapsedTimeFromLastRead, fuelTankLevel)
+            print(fuelUsageTrend.slope)
+        else :
+            fuelUsageTrend = None
+        return fuelUsageTrend
+
 
 
 
