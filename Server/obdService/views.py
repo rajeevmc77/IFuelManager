@@ -53,6 +53,10 @@ class CarOBDDataView(APIView):
         return  data
 
     def getFuelUsageTrend(self, data):
+        """
+        Find the Fuel Usage trend. A higher negative slope shows fuel leak
+        Author: Akshara Gireesh Murali
+        """
         fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).filter( SecondsElapsed__lte = 59 ,
             SecondsElapsed__gte=1).values_list('FuelTankLevel', 'SecondsElapsed').order_by('-created_at')[:10]
         if fuelreadingSamples:
@@ -63,7 +67,12 @@ class CarOBDDataView(APIView):
             fuelUsageTrend = None
         return fuelUsageTrend
 
+
     def setFuelLevelData(self,data):
+        """
+        Normalize the Fuel level Data receiced from Vehicle. Make Necessory Adjustments
+        Author: Akshara Gireesh Murali
+        """
         previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel','created_at').order_by('-created_at')[:1]
         if not previousReading:
             previousReading = 81
