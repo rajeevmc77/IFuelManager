@@ -26,7 +26,7 @@ class CarOBDDataView(APIView):
 
     def get(self, request, format=None):
         """
-        Return a list of all users.
+
         """
         carprofiles = CarOBDData.objects.all()
         serializer = CarOBDDataSerializer(carprofiles, many=True)
@@ -54,15 +54,14 @@ class CarOBDDataView(APIView):
 
     def getFuelUsageTrend(self, data):
         """
-        Find the Fuel Usage trend. A higher negative slope shows fuel leak
-        Author: Akshara Gireesh Murali
+               Normalize the Fuel level Data receiced from Vehicle. Make Necessory Adjustments
+               Author: Akshara Gireesh Murali
         """
-        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).filter( SecondsElapsed__lte = 59 ,
-            SecondsElapsed__gte=1).values_list('FuelTankLevel', 'SecondsElapsed').order_by('-created_at')[:10]
+        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel', 'id').order_by('-created_at')[:10]
         if fuelreadingSamples:
             fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
-            elapsedTimeFromLastRead = [item[1] for item in fuelreadingSamples]
-            fuelUsageTrend = linregress(elapsedTimeFromLastRead, fuelTankLevel)
+            sampleID = [item[1] for item in fuelreadingSamples]
+            fuelUsageTrend = linregress(sampleID, fuelTankLevel)
         else :
             fuelUsageTrend = None
         return fuelUsageTrend
@@ -100,6 +99,6 @@ class CarOBDDataView(APIView):
             projectedRemainingFuel = previousReading - ((0.005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
         if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = projectedRemainingFuel
-        data['SecondsElapsed'] = secondsElapsed if secondsElapsed > 1 else 1
+        # data['SecondsElapsed'] = secondsElapsed if secondsElapsed > 1 else 1
         return data
 
