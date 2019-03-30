@@ -54,7 +54,8 @@ class CarOBDDataView(APIView):
         return  data
 
     def getFuelUsageTrend(self, data):
-        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).exclude(SecondsElapsed=0).values_list('FuelTankLevel', 'SecondsElapsed').order_by('-created_at')[:10]
+        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).filter( SecondsElapsed__lte = 59 ,
+            SecondsElapsed__gte=1).values_list('FuelTankLevel', 'SecondsElapsed').order_by('-created_at')[:10]
         if fuelreadingSamples:
             fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
             elapsedTimeFromLastRead = [item[1] for item in fuelreadingSamples]
