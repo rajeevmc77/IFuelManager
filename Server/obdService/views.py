@@ -37,10 +37,8 @@ class CarOBDDataView(APIView):
 
         data = self.getJSON(request)
         data = self.setFuelLevelData(data)
-        trend = self.getFuelUsageTrend(data)
-        if trend:
-            if trend.slope == trend.slope:
-                data['FuelUsageTrend'] = trend.slope * 10000
+        data = self.setFuelUsageTrend(data)
+
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -53,19 +51,31 @@ class CarOBDDataView(APIView):
         data = json.loads(jsondata)
         return  data
 
-    def getFuelUsageTrend(self, data):
+    def setFuelUsageTrend(self, data):
         """
                Normalize the Fuel level Data receiced from Vehicle. Make Necessory Adjustments
                Author: Akshara Gireesh Murali
         """
-        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel', 'id').order_by('-created_at')[:10]
+        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel', 'id',
+                                    'FuelUsageTrend').order_by('-created_at')[:10]
         if fuelreadingSamples:
             fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
             sampleID = [item[1] for item in fuelreadingSamples]
+            usageDeviation = [item[2] for item in fuelreadingSamples if item[2] != 0 ]
+            if len(usageDeviation) >=2 :
+                fuelUsageDeviation = statistics.stdev(usageDeviation)
+            else:
+                fuelUsageDeviation=0
             fuelUsageTrend = linregress(sampleID, fuelTankLevel)
         else :
             fuelUsageTrend = None
-        return fuelUsageTrend
+            fuelUsageDeviation = None
+        if fuelUsageTrend:
+            if fuelUsageTrend.slope == fuelUsageTrend.slope:
+                data['FuelUsageTrend'] = fuelUsageTrend.slope * 10000
+        if fuelUsageDeviation:
+            data['FuelUsageDeviation']= fuelUsageDeviation
+        return data
 
 
     def setFuelLevelData(self,data):
