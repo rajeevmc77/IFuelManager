@@ -10,6 +10,7 @@ import json
 import datetime as dt
 import pytz
 from scipy.stats import linregress
+import statistics
 
 from .models import CarOBDData,  CarProfile
 from .serializers import CarOBDDataSerializer
