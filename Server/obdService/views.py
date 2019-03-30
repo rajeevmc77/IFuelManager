@@ -35,16 +35,11 @@ class CarOBDDataView(APIView):
     def post(self, request, format=None):
 
         data = self.getJSON(request)
-        if int(data['FuelTankLevel']) == 0:
-            remainingFuelData = self.getProjectedRemainingFuel(data)
-            data['FuelTankLevel'] = remainingFuelData[0]
-            data['SecondsElapsed'] = remainingFuelData[1] if remainingFuelData[1] > 1 else 1
-            trendinputData = {'VIN': data['VIN'],'FuelTankLevel': remainingFuelData[0], 'SecondsElapsed': remainingFuelData[1]}
-            trend = self.getFuelUsageTrend(trendinputData)
-            if trend:
-                if trend.slope == trend.slope:
-                    print(trend.slope)
-                    data['FuelUsageTrend'] = trend.slope * 10000
+        data = self.setFuelLevelData(data)
+        trend = self.getFuelUsageTrend(data)
+        if trend:
+            if trend.slope == trend.slope:
+                data['FuelUsageTrend'] = trend.slope * 10000
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -68,27 +63,22 @@ class CarOBDDataView(APIView):
             fuelUsageTrend = None
         return fuelUsageTrend
 
-
-
-
-    def getProjectedRemainingFuel(self,data):
+    def setFuelLevelData(self,data):
         previousReading = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel','created_at').order_by('-created_at')[:1]
         if not previousReading:
             previousReading = 81
             lastKnownReadTime = dt.datetime.now()
         else:
-            #print (data['created_at'])
             lastKnownReadTime = previousReading[0][1]
             previousReading = previousReading[0][0]
-
         fuelTankVolume = CarProfile.objects.filter(VIN=data['VIN']).values_list('FuelTankVolume')
         if not fuelTankVolume:
             fuelTankVolume = 35
         else:
             fuelTankVolume= fuelTankVolume[0][0]
-
         if not lastKnownReadTime:
             projectedRemainingFuel = previousReading - (0.005 / fuelTankVolume)
+            secondsElapsed = 0
         else:
             utc = pytz.UTC
             now = utc.localize(dt.datetime.now())
@@ -98,7 +88,9 @@ class CarOBDDataView(APIView):
             adjustmentMultiplier = 0
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1
-
             projectedRemainingFuel = previousReading - ((0.005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
-        return ( projectedRemainingFuel, secondsElapsed )
+        if int(data['FuelTankLevel']) == 0:
+            data['FuelTankLevel'] = projectedRemainingFuel
+        data['SecondsElapsed'] = secondsElapsed if secondsElapsed > 1 else 1
+        return data
 
