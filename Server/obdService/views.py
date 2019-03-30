@@ -38,9 +38,13 @@ class CarOBDDataView(APIView):
         if int(data['FuelTankLevel']) == 0:
             remainingFuelData = self.getProjectedRemainingFuel(data)
             data['FuelTankLevel'] = remainingFuelData[0]
-            data['SecondsElapsed'] = remainingFuelData[1]
+            data['SecondsElapsed'] = remainingFuelData[1] if remainingFuelData[1] > 1 else 1
             trendinputData = {'VIN': data['VIN'],'FuelTankLevel': remainingFuelData[0], 'SecondsElapsed': remainingFuelData[1]}
-            self.getFuelUsageTrend(trendinputData)
+            trend = self.getFuelUsageTrend(trendinputData)
+            if trend:
+                if trend.slope == trend.slope:
+                    print(trend.slope)
+                    data['FuelUsageTrend'] = trend.slope * 10000
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -60,7 +64,6 @@ class CarOBDDataView(APIView):
             fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
             elapsedTimeFromLastRead = [item[1] for item in fuelreadingSamples]
             fuelUsageTrend = linregress(elapsedTimeFromLastRead, fuelTankLevel)
-            print(fuelUsageTrend.slope)
         else :
             fuelUsageTrend = None
         return fuelUsageTrend
