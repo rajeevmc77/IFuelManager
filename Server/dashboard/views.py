@@ -25,6 +25,5 @@ class DashboardView(View):
 
         return render(request, "dashboard/dashboard.html",
                       { 'CarOBDData': CarOBDData.objects.all(),
-                        'CarProfile': CarProfile.objects.all(),
-                        'CarHistory': carsHistry
+                        'CarFuelHistory': carsHistry
                       })
