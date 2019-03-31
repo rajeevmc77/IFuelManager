@@ -86,5 +86,5 @@ class CarOBDDataView(APIView):
         fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1]
         if fuelreadingSamples:
             lastfuelTankLevel = fuelreadingSamples[0][0]
-            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - data["FuelTankLevel"]) > 0.01 else 0
+            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - float(data["FuelTankLevel"])) > 0.01 else 0
         return data
