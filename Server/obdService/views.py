@@ -9,8 +9,6 @@ from rest_framework import status
 import json
 import datetime as dt
 import pytz
-from scipy.stats import linregress
-import statistics
 
 from .models import CarOBDData,  CarProfile
 from .serializers import CarOBDDataSerializer
@@ -45,32 +43,6 @@ class CarOBDDataView(APIView):
         jsondata = request.body.decode("utf-8").rstrip('\x00')
         data = json.loads(jsondata)
         return  data
-
-    def setFuelUsageTrend(self, data):
-        """
-               Normalize the Fuel level Data receiced from Vehicle. Make Necessory Adjustments
-               Author: Akshara Gireesh Murali
-        """
-        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel', 'id',
-                                    'FuelUsageTrend').order_by('-created_at')[:10]
-        if fuelreadingSamples:
-            fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
-            sampleID = [item[1] for item in fuelreadingSamples]
-            usageDeviation = [item[2] for item in fuelreadingSamples if item[2] < 0 ]
-            if len(usageDeviation) >=2 :
-                fuelUsageDeviation = statistics.stdev(usageDeviation)
-            else:
-                fuelUsageDeviation=0
-            fuelUsageTrend = linregress(sampleID, fuelTankLevel)
-        else :
-            fuelUsageTrend = None
-            fuelUsageDeviation = None
-        if fuelUsageTrend:
-            if fuelUsageTrend.slope == fuelUsageTrend.slope:
-                data['FuelUsageTrend'] = fuelUsageTrend.slope * 10000
-        if fuelUsageDeviation:
-            data['FuelUsageDeviation']= fuelUsageDeviation
-        return data
 
     def setFuelLevelData(self,data):
         """
