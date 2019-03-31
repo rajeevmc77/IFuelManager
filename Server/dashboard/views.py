@@ -24,6 +24,7 @@ class DashboardView(View):
                     break
 
         return render(request, "dashboard/dashboard.html",
-                      { 'CarOBDData': CarOBDData.objects.all(),
+                      {
+                        #'CarOBDData': CarOBDData.objects.all(),
                         'CarFuelHistory': carsHistry
                       })
