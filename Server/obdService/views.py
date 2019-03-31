@@ -17,12 +17,7 @@ from .serializers import CarOBDDataSerializer
 
 class CarOBDDataView(APIView):
     """
-    View to list all users in the system.
-
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAdminUser,)
+    API to capture OBD Data from vehicle
     """
 
     def get(self, request, format=None):
@@ -45,7 +40,6 @@ class CarOBDDataView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
     def getJSON(self,request):
         jsondata = request.body.decode("utf-8").rstrip('\x00')
         data = json.loads(jsondata)
@@ -61,7 +55,7 @@ class CarOBDDataView(APIView):
         if fuelreadingSamples:
             fuelTankLevel =  [item[0] for item in fuelreadingSamples ] #list(fuelreadingSamples)
             sampleID = [item[1] for item in fuelreadingSamples]
-            usageDeviation = [item[2] for item in fuelreadingSamples if item[2] != 0 ]
+            usageDeviation = [item[2] for item in fuelreadingSamples if item[2] < 0 ]
             if len(usageDeviation) >=2 :
                 fuelUsageDeviation = statistics.stdev(usageDeviation)
             else:
@@ -76,7 +70,6 @@ class CarOBDDataView(APIView):
         if fuelUsageDeviation:
             data['FuelUsageDeviation']= fuelUsageDeviation
         return data
-
 
     def setFuelLevelData(self,data):
         """
