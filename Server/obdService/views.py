@@ -32,7 +32,8 @@ class CarOBDDataView(APIView):
 
         data = self.getJSON(request)
         data = self.setFuelLevelData(data)
-        data = self.setFuelUsageTrend(data)
+        #data = self.setFuelUsageTrend(data)
+        data = self.setFuelUsageSpikes(data)
 
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
@@ -103,6 +104,15 @@ class CarOBDDataView(APIView):
             projectedRemainingFuel = previousReading - ((0.005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
         if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = projectedRemainingFuel
-        # data['SecondsElapsed'] = secondsElapsed if secondsElapsed > 1 else 1
         return data
 
+    def setFuelUsageSpikes(self, data):
+        """
+               Normalize the Fuel level Data receiced from Vehicle. Make Necessory Adjustments
+               Author: Akshara Gireesh Murali
+        """
+        fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1]
+        if fuelreadingSamples:
+            lastfuelTankLevel = fuelreadingSamples[0][0]
+            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - data["FuelTankLevel"]) > 0.01 else 0
+        return data

@@ -9,7 +9,7 @@ from obdService.models import CarOBDData, CarProfile
 
 class DashboardView(View):
     def get(self, request):
-        carOBDData = CarOBDData.objects.values('VIN').annotate(Avg('FuelUsageDeviation'))
+        #carOBDData = CarOBDData.objects.values('VIN').annotate(Avg('FuelUsageDeviation'))
         #CarOBDData.objects.aggregate(Avg('FuelUsageDeviation'))
 
         return render(request, "dashboard/dashboard.html",
