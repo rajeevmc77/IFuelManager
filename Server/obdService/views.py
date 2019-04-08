@@ -27,12 +27,10 @@ class CarOBDDataView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-
         data = self.getJSON(request)
         data = self.setFuelLevelData(data)
         #data = self.setFuelUsageTrend(data)
         data = self.setFuelUsageSpikes(data)
-
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -73,7 +71,7 @@ class CarOBDDataView(APIView):
             adjustmentMultiplier = 0
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1
-            projectedRemainingFuel = previousReading - ((0.005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
+            projectedRemainingFuel = previousReading - ((0.0005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
         if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = projectedRemainingFuel
         return data
