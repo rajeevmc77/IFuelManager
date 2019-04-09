@@ -4,6 +4,7 @@ var optsSpeedoMeter;
 
 var guageControlMap = [];
 var fuelLeakIndicators = [];
+var fuelLeakIndicatorMessages = [];
 
 function loadDashboardData(){
     $.get("/api/obdData/",
@@ -140,6 +141,9 @@ function initGuages(){
             var fuelLeakIndicator = $('#progressbar-'+ item["VIN"]);
             fuelLeakIndicators.push({"VIN": item["VIN"], "control" : fuelLeakIndicator});
 
+            var fuelLeakIndicatorMessage = $('#message-'+ item["VIN"]);
+            fuelLeakIndicatorMessages.push({"VIN": item["VIN"], "control" : fuelLeakIndicatorMessage});
+
             var targetFuelMeter = document.getElementById('fuelMeter-'+ item["VIN"]);
             var fuelgauge = new Gauge(targetFuelMeter).setOptions(optsFuelMeter);
             guageControlMap.push({"VIN":item["VIN"], "guage" : fuelgauge , type: "Fuel"});
@@ -191,14 +195,20 @@ function setGuageValues(data){
                                     function(item){
                                         return item.VIN === dataItem.VIN;
                                 });
+            var leakIndicatorMessage = fuelLeakIndicatorMessages.filter(
+                                    function(item){
+                                        return item.VIN === dataItem.VIN;
+                                });
 
             if (dataItem.PossibleFuelLeak){
                leakIndicator[0].control.removeClass("progress-bar-green");
                leakIndicator[0].control.addClass("progress-bar-red");
+               leakIndicatorMessage[0].control.text("Spurious Fuel Activity!!!");
             }
             else{
                leakIndicator[0].control.removeClass("progress-bar-red");
                leakIndicator[0].control.addClass("progress-bar-green");
+               leakIndicatorMessage[0].control.text("In Good Condition.");
             }
             console.log(leakIndicator[0].control);
         }
