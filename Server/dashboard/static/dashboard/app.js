@@ -5,32 +5,21 @@ var optsSpeedoMeter;
 var guageControlMap = [];
 
 
-function loadAjaxData(){
-    /*var table = $('#obdData').DataTable();
-    table.ajax.reload();
-
-    setTimeout(function(){loadAjaxData();}, 1000);*/
+function loadDashboardData(){
+    $.get("/api/obdData/",
+            function(data, status){
+                setGuageValues(JSON.parse(data));
+            }
+        );
+    setTimeout(function(){loadDashboardData();}, 1000);
 }
 
 
 $(document).ready(function() {
-/*    $('#obdData').DataTable( {
-        "ajax": {
-            "url": "/api/obdData/",
-            "dataSrc": ""
-        },
-        "columns": [
-           { "data": "VIN" },
-           { "data": "RPM" },
-           { "data": "Speed" },
-           { "data": "FuelTankLevel" }
-        ]
-    });
 
-    loadAjaxData();*/
-    console.log(CarFuelHistory);
     defineGuageOpts();
     initGuages();
+    loadDashboardData();
 
 });
 
@@ -178,3 +167,25 @@ function initGuages(){
     );
 }
 
+function setGuageValues(data){
+
+     $.each(data,
+        function(key, dataItem){
+            var fuelGuage = guageControlMap.filter(
+                                function(item){
+                                    return item.VIN == dataItem.VIN && item.type == "Fuel" ;
+                                });
+            fuelGuage[0].guage.set(dataItem.dashboard.FuelTankLevel);
+            var RPMGuage = guageControlMap.filter(
+                                function(item){
+                                        return item.VIN == dataItem.VIN && item.type == "RPM" ;
+                                });
+            RPMGuage[0].guage.set(dataItem.dashboard.RPM/100);
+            var SpeedGuage = guageControlMap.filter(
+                                function(item){
+                                        return item.VIN == dataItem.VIN && item.type == "Speed" ;
+                                });
+            SpeedGuage[0].guage.set(dataItem.dashboard.Speed);
+        }
+     );
+}

@@ -20,11 +20,29 @@ class CarOBDDataView(APIView):
 
     def get(self, request, format=None):
         """
-
+            API to get the data to populate the Dashboard
+            Author : Akshara Gireesh Murali
         """
-        carprofiles = CarOBDData.objects.all()
-        serializer = CarOBDDataSerializer(carprofiles, many=True)
-        return Response(serializer.data)
+        carsWithSpuriousHistory = CarOBDData.objects.values('VIN').filter(PossibleFuelLeak=1).distinct()
+        carsWithCleanHistry = CarOBDData.objects.values('VIN').exclude(VIN__in=carsWithSpuriousHistory).distinct()
+        carProfiles = list(CarProfile.objects.all())
+
+        carsHistry = [dict(item, **{'PossibleFuelLeak': 0}) for item in carsWithCleanHistry]
+        carsHistry = carsHistry + [dict(item, **{'PossibleFuelLeak': 1}) for item in carsWithSpuriousHistory]
+
+        for item in carsHistry:
+            carLastDashboardReading = CarOBDData.objects.filter(VIN=item["VIN"]).values_list('FuelTankLevel',
+                                                                                             'RPM', 'Speed').order_by(
+                '-created_at')[:1]
+            for profile in carProfiles:
+                if profile.VIN == item["VIN"]:
+                    item.update({"Make": profile.Make, "Model": profile.Model})
+                    if carLastDashboardReading and len(carLastDashboardReading) > 0:
+                        item["dashboard"] = {'FuelTankLevel': carLastDashboardReading[0][0],
+                                             'RPM': carLastDashboardReading[0][1],
+                                             'Speed': carLastDashboardReading[0][2]}
+                    break
+        return Response(json.dumps(carsHistry))
 
     def post(self, request, format=None):
         data = self.getJSON(request)
