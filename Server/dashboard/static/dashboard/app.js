@@ -3,7 +3,7 @@ var optsRPMMeter;
 var optsSpeedoMeter;
 
 var guageControlMap = [];
-
+var fuelLeakIndicators = [];
 
 function loadDashboardData(){
     $.get("/api/obdData/",
@@ -14,13 +14,10 @@ function loadDashboardData(){
     setTimeout(function(){loadDashboardData();}, 1000);
 }
 
-
 $(document).ready(function() {
-
     defineGuageOpts();
     initGuages();
     loadDashboardData();
-
 });
 
 function defineGuageOpts(){
@@ -140,6 +137,9 @@ function initGuages(){
   $.each(CarFuelHistory,
         function(key, item){
 
+            var fuelLeakIndicator = $('#progressbar-'+ item["VIN"]);
+            fuelLeakIndicators.push({"VIN": item["VIN"], "control" : fuelLeakIndicator});
+
             var targetFuelMeter = document.getElementById('fuelMeter-'+ item["VIN"]);
             var fuelgauge = new Gauge(targetFuelMeter).setOptions(optsFuelMeter);
             guageControlMap.push({"VIN":item["VIN"], "guage" : fuelgauge , type: "Fuel"});
@@ -173,19 +173,30 @@ function setGuageValues(data){
         function(key, dataItem){
             var fuelGuage = guageControlMap.filter(
                                 function(item){
-                                    return item.VIN == dataItem.VIN && item.type == "Fuel" ;
+                                    return item.VIN === dataItem.VIN && item.type == "Fuel" ;
                                 });
             fuelGuage[0].guage.set(dataItem.dashboard.FuelTankLevel);
             var RPMGuage = guageControlMap.filter(
                                 function(item){
-                                        return item.VIN == dataItem.VIN && item.type == "RPM" ;
+                                        return item.VIN === dataItem.VIN && item.type == "RPM" ;
                                 });
             RPMGuage[0].guage.set(dataItem.dashboard.RPM/100);
             var SpeedGuage = guageControlMap.filter(
                                 function(item){
-                                        return item.VIN == dataItem.VIN && item.type == "Speed" ;
+                                        return item.VIN === dataItem.VIN && item.type == "Speed" ;
                                 });
             SpeedGuage[0].guage.set(dataItem.dashboard.Speed);
+
+            var leakIndicator = fuelLeakIndicators.filter(
+                                    function(item){
+                                        return item.VIN === dataItem.VIN;
+                                });
+            if (dataItem.PossibleFuelLeak){
+               leakIndicator[0].control.css({ "width": "100%", "background-color": "red!important" });
+            }
+            else{
+               leakIndicator[0].control.css({ "width": "100%", "background-color": "green!important" });
+            }
         }
      );
 }
