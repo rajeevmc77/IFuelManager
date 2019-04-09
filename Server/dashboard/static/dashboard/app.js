@@ -191,12 +191,16 @@ function setGuageValues(data){
                                     function(item){
                                         return item.VIN === dataItem.VIN;
                                 });
+
             if (dataItem.PossibleFuelLeak){
-               leakIndicator[0].control.css({ "width": "100%", "background-color": "red!important" });
+               leakIndicator[0].control.removeClass("progress-bar-green");
+               leakIndicator[0].control.addClass("progress-bar-red");
             }
             else{
-               leakIndicator[0].control.css({ "width": "100%", "background-color": "green!important" });
+               leakIndicator[0].control.removeClass("progress-bar-red");
+               leakIndicator[0].control.addClass("progress-bar-green");
             }
+            console.log(leakIndicator[0].control);
         }
      );
 }
