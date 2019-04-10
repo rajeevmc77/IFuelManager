@@ -23,5 +23,5 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('', include('obdService.urls'))
      path('', CarOBDDataView.as_view(), name="carObdData"),
-     path('api/obdData/', CarOBDDataView.as_view(), name="carObdData"),
+     path('obdData/', CarOBDDataView.as_view(), name="carObdData"),
 ]

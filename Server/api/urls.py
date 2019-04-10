@@ -25,6 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('obdService.urls')),
     path('dashboard/', include('dashboard.urls')),
-    re_path('api/(?P<version>(v1|v2))/', include('obdService.urls'))
+    path('api/', include('obdService.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -36,6 +36,11 @@ class DashboardView(View):
                       })
 
     def chartView(request):
+        # http://localhost:8000/dashboard/chartView/?vin=123
+        # request.GET['vin']
+        if request.GET['vin']:
+            vin = request.GET['vin']
+            print(vin)
 
         return render(request, "dashboard/FuelChart.html",
                       {
