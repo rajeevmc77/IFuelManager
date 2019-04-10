@@ -36,8 +36,6 @@ class DashboardView(View):
                       })
 
     def chartView(request):
-        # http://localhost:8000/dashboard/chartView/?vin=123
-        # request.GET['vin']
         vin = None
         carObdReading = None
         carProfile = None
