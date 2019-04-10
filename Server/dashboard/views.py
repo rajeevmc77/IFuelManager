@@ -38,10 +38,14 @@ class DashboardView(View):
     def chartView(request):
         # http://localhost:8000/dashboard/chartView/?vin=123
         # request.GET['vin']
+        vin = None
         if request.method == 'GET' and 'vin' in request.GET:
             vin = request.GET['vin']
             if vin is not None and vin != '':
                 print(vin)
+
+        if vin is not None:
+            print("GOT VIN")
 
         return render(request, "dashboard/FuelChart.html",
                       {
