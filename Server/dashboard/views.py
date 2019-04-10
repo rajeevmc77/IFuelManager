@@ -34,3 +34,10 @@ class DashboardView(View):
                         'CarFuelHistory': carsHistry,
                         'jsonCarFuelHistory' : json.dumps(carsHistry)
                       })
+
+    def chartView(request):
+
+        return render(request, "dashboard/FuelChart.html",
+                      {
+                          # 'CarOBDData': CarOBDData.objects.all(),
+                      })
