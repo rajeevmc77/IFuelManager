@@ -39,15 +39,16 @@ class DashboardView(View):
         # http://localhost:8000/dashboard/chartView/?vin=123
         # request.GET['vin']
         vin = None
+        carObdReading = None
         if request.method == 'GET' and 'vin' in request.GET:
             vin = request.GET['vin']
-            if vin is not None and vin != '':
-                print(vin)
 
         if vin is not None:
-            print("GOT VIN")
+            carObdReading = list(CarOBDData.objects.filter(VIN=vin).values_list('id','FuelTankLevel').order_by('-created_at')[:50])
+            carObdReading = json.dumps(carObdReading)
 
         return render(request, "dashboard/FuelChart.html",
                       {
                           # 'CarOBDData': CarOBDData.objects.all(),
+                          'carObdReading': carObdReading
                       })

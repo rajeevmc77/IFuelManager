@@ -27,9 +27,10 @@
         <!-- Begin Page Content -->
 
         <div class="container-fluid">
-<!--            <script type="text/javascript">
-                  CarFuelHistory =  {{ jsonCarFuelHistory | safe }};
-            </script>-->
+            <script type="text/javascript">
+                  CarFuelHistory =  {{ carObdReading | safe }};
+                  console.log(CarFuelHistory);
+            </script>
 
             <div class="row">
 
@@ -72,6 +73,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'dashboard/Chart.min.js' %}"></script>
-<script src="{% static 'dashboard/app.js' %}"></script>
+<script src="{% static 'chatView/Chart.min.js' %}"></script>
+<script src="{% static 'chatView/app.js' %}"></script>
 {% endblock %}
