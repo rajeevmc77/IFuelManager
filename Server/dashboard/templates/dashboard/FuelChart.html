@@ -30,8 +30,8 @@
             <script type="text/javascript">
                   CarFuelHistory =  {{ carObdReading | safe }};
                   CarFuelHistory.reverse();
-                  carprofile = {{ carprofile | safe }};
-                  console.log(carprofile);
+                  jsonCarProfile = {{ jsonCarProfile | safe }};
+                  console.log(jsonCarProfile);
             </script>
 
             <div class="row">
@@ -52,6 +52,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xs">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Vehicle Data </div>
+                                    {% for profile in carProfile %}
+                                        <div class="text-xs text-info text-uppercase mb-1"> {{ profile.OwnerFirstName }} </div>
+                                        <div class="text-xs text-info text-uppercase mb-1"> {{ profile.OwnerLastName }} </div>
+                                        <div class="text-xs text-info text-uppercase mb-1"> {{ profile.Make }}</div>
+                                        <div class="text-xs text-info text-uppercase mb-1"> {{ profile.Model }}</div>
+                                        <div class="text-xs text-info text-uppercase mb-1"> {{ profile.VIN }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-car fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
         </div>
