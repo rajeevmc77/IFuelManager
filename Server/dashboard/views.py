@@ -40,15 +40,19 @@ class DashboardView(View):
         # request.GET['vin']
         vin = None
         carObdReading = None
+        carprofile = None
         if request.method == 'GET' and 'vin' in request.GET:
             vin = request.GET['vin']
 
         if vin is not None:
             carObdReading = list(CarOBDData.objects.filter(VIN=vin).values_list('id','FuelTankLevel').order_by('-created_at')[:50])
             carObdReading = json.dumps(carObdReading)
+            carprofile = list(CarProfile.objects.filter(VIN=vin).values('OwnerFirstName', 'OwnerLastName', 'Make', 'Model'))
+            carprofile = json.dumps(carprofile)
 
         return render(request, "dashboard/FuelChart.html",
                       {
                           # 'CarOBDData': CarOBDData.objects.all(),
-                          'carObdReading': carObdReading
+                          'carObdReading': carObdReading,
+                          'carprofile': carprofile
                       })

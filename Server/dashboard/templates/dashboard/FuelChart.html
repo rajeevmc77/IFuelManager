@@ -30,6 +30,8 @@
             <script type="text/javascript">
                   CarFuelHistory =  {{ carObdReading | safe }};
                   CarFuelHistory.reverse();
+                  carprofile = {{ carprofile | safe }};
+                  console.log(carprofile);
             </script>
 
             <div class="row">
