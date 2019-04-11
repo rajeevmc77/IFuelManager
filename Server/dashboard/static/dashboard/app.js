@@ -15,10 +15,26 @@ function loadDashboardData(){
     setTimeout(function(){loadDashboardData();}, 1000);
 }
 
+function resetFuelLevel(vin){
+     $.ajax("/dashboard/resetFuelLevel/?vin="+vin,
+             {
+                 dataType: "json",
+                 success: function(data) {
+                      alert("Succcessfullt reset Fuel history of VIN " +vin );
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                     console.log(textStatus);
+                 }
+             }
+     );
+    // alert("Reset Fuel Level " + vin );
+}
+
 $(document).ready(function() {
     defineGuageOpts();
     initGuages();
     loadDashboardData();
+    //$("#resetFuelLevel").click(resetFuelLevel);
 });
 
 function defineGuageOpts(){
@@ -214,3 +230,5 @@ function setGuageValues(data){
         }
      );
 }
+
+
