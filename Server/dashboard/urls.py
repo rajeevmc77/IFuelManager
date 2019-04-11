@@ -12,6 +12,8 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('', include('obdService.urls'))
     path('', DashboardView.as_view(), name="DashboardView"),
-    path('chartView/', DashboardView.chartView)
+    path('chartView/', DashboardView.chartView),
+    path('resetFuelLevel/', DashboardView.resetFuelData),
+    path('getFuelLevel/', DashboardView.getAjaxFuelData)
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

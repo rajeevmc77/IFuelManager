@@ -56,3 +56,35 @@ class DashboardView(View):
                           'carProfile': carProfile,
                           'jsonCarProfile': jsonCarProfile
                       })
+
+    def resetFuelData(request):
+        vin = None
+        carObdReading = None
+        carProfile = None
+        jsonCarProfile = None
+        if request.method == 'GET' and 'vin' in request.GET:
+            vin = request.GET['vin']
+        if vin is not None:
+            CarOBDData.objects.filter(VIN=vin).update(PossibleFuelLeak=0)
+            return HttpResponse("{'ResetStatus':'Success'}", content_type="application/json")
+        else:
+            return HttpResponse("{'ResetStatus':'Failed'}", content_type="application/json")
+        #http://localhost:8000/dashboard/resetFuelLevel/?vin=MAKDF665JJ4003504
+        #return HttpResponse(json.dumps(response_data), content_type="application/json")
+        #return HttpResponse("Reset Done.")
+
+    def getAjaxFuelData(request):
+        vin = None
+        carObdReading = None
+        carProfile = None
+        jsonCarProfile = None
+        if request.method == 'GET' and 'vin' in request.GET:
+            vin = request.GET['vin']
+        if vin is not None:
+            carObdReading = list(CarOBDData.objects.filter(VIN=vin).values_list('id', 'FuelTankLevel').order_by('-created_at')[:50])
+            carObdReading = json.dumps(carObdReading)
+            return HttpResponse(carObdReading, content_type="application/json")
+        else:
+            return HttpResponse("{'ResetStatus':'Failed'}", content_type="application/json")
+        #http://localhost:8000/dashboard/getFuelLevel/?vin=MAKDF665JJ4003504
+
