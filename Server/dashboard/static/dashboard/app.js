@@ -225,7 +225,6 @@ function setGuageValues(data){
                leakIndicator[0].control.addClass("progress-bar-green");
                leakIndicatorMessage[0].control.text("In Good Condition.");
             }
-            console.log(leakIndicator[0].control);
         }
      );
 }

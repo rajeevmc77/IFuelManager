@@ -14,6 +14,6 @@ urlpatterns = [
     path('', DashboardView.as_view(), name="DashboardView"),
     path('chartView/', DashboardView.chartView),
     path('resetFuelLevel/', DashboardView.resetFuelData),
-    path('getFuelLevel/', DashboardView.getAjaxFuelData)
+    path('getFuelHistory/', DashboardView.getAjaxFuelData)
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

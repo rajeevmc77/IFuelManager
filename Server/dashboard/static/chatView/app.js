@@ -1,17 +1,18 @@
 var myLineChart;
+var jsonCarProfile;
 
-function initLineGraph(){
+var labels = CarFuelHistory.map(function(value, index){
+    return value[0];
+});
+
+var data = CarFuelHistory.map(function(value, index){
+    return value[1];
+});
+
+function initLineGraph(labels,data){
 
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
-
-    var labels = CarFuelHistory.map(function(value, index){
-        return value[0];
-    });
-
-    var data = CarFuelHistory.map(function(value, index){
-        return value[1];
-    });
 
     var ctx = document.getElementById("myAreaChart");
     myLineChart = new Chart(ctx, {
@@ -94,5 +95,53 @@ function initLineGraph(){
 
 }
 
-initLineGraph();
+initLineGraph(labels,data);
 
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+}
+
+function removeData(chart) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+}
+
+function refreshChart(data, labels){
+    removeData(myLineChart);
+    addData(myLineChart,labels,data);
+    myLineChart.update();
+}
+
+function getFuelHistory(){
+    if(jsonCarProfile && jsonCarProfile.length > 0){
+         $.ajax("/dashboard/getFuelHistory/?vin="+jsonCarProfile[0].VIN,
+                 {
+                     dataType: "json",
+                     success: function(data) {
+                        data.reverse();
+                        labels = data.map(function(value, index){
+                                return value[0];
+                        });
+                        data = data.map(function(value, index){
+                            return value[1];
+                        });
+                        refreshChart(data, labels);
+                     },
+                     error: function(jqXHR, textStatus, errorThrown) {
+                        alert("Failed to get Fuel history of VIN " +vin );
+                         console.log(textStatus);
+                     }
+                 }
+         );
+         setTimeout(function(){getFuelHistory()}, 1000);
+     }
+}
+
+$(document).ready(function() {
+    // getFuelHistory();
+});

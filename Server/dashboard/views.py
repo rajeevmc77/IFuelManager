@@ -85,6 +85,6 @@ class DashboardView(View):
             carObdReading = json.dumps(carObdReading)
             return HttpResponse(carObdReading, content_type="application/json")
         else:
-            return HttpResponse("{'ResetStatus':'Failed'}", content_type="application/json")
-        #http://localhost:8000/dashboard/getFuelLevel/?vin=MAKDF665JJ4003504
+            return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")
+        #http://localhost:8000/dashboard/getFuelHistory/?vin=MAKDF665JJ4003504
 
