@@ -34,7 +34,6 @@ $(document).ready(function() {
     defineGuageOpts();
     initGuages();
     loadDashboardData();
-    //$("#resetFuelLevel").click(resetFuelLevel);
 });
 
 function defineGuageOpts(){
