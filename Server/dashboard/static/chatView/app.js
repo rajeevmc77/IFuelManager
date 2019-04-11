@@ -9,7 +9,7 @@ var data = CarFuelHistory.map(function(value, index){
     return value[1];
 });
 
-function initLineGraph(labels,data){
+function initLineGraph(){
 
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
@@ -100,30 +100,16 @@ function initLineGraph(labels,data){
 
 }
 
-initLineGraph(labels,data);
-
-function addData(chart, label, data) {
-    chart.data.labels.push(label);
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
-}
-
-function removeData(chart) {
-    chart.data.labels.pop();
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.pop();
-    });
-}
-
 function refreshChart(data, labels){
-    //removeData(myLineChart);
-    //addData(myLineChart,labels,data);
-    myLineChart.data.labels.shift();
-    myLineChart.data.datasets[0].data.shift();
 
-    console.log(myLineChart.data.labels);
-    console.log(myLineChart.data.datasets[0].data);
+    var diff = labels[0] - myLineChart.data.labels[0];
+    for (  ; diff>=0; diff--){
+        myLineChart.data.labels.shift();
+        myLineChart.data.datasets[0].data.shift();
+        myLineChart.data.labels.push(labels[labels.length - diff - 1]);
+        myLineChart.data.datasets[0].data.push(data[data.length - diff - 1]);
+
+    }
     myLineChart.update();
 }
 
@@ -148,12 +134,11 @@ function getFuelHistory(){
                      }
                  }
          );
-          setTimeout(function(){getFuelHistory()}, 1000);
+         setTimeout(function(){getFuelHistory()}, 1000);
      }
 }
 
 $(document).ready(function() {
+    initLineGraph();
     getFuelHistory();
-    //console.log(myLineChart.data.labels);
-    //console.log(myLineChart.data.datasets[0].data);
 });
