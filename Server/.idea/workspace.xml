@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e312ca7d-616b-4061-a8f3-b668a777faee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/static/chatView/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/static/chatView/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/static/dashboard/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/static/dashboard/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/dashboard/FuelChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/dashboard/FuelChart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="145" column="7" selection-start-line="145" selection-start-column="7" selection-end-line="145" selection-end-column="7" />
+            <state relative-caret-position="328">
+              <caret line="150" column="9" lean-forward="true" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -537,8 +532,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="145" column="7" selection-start-line="145" selection-start-column="7" selection-end-line="145" selection-end-column="7" />
+        <state relative-caret-position="328">
+          <caret line="150" column="9" lean-forward="true" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
         </state>
       </provider>
     </entry>

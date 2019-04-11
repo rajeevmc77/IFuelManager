@@ -36,7 +36,12 @@ function initLineGraph(labels,data){
         }],
       },
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Fuel History'
+        },
         layout: {
           padding: {
             left: 10,
@@ -112,8 +117,13 @@ function removeData(chart) {
 }
 
 function refreshChart(data, labels){
-    removeData(myLineChart);
-    addData(myLineChart,labels,data);
+    //removeData(myLineChart);
+    //addData(myLineChart,labels,data);
+    myLineChart.data.labels.shift();
+    myLineChart.data.datasets[0].data.shift();
+
+    console.log(myLineChart.data.labels);
+    console.log(myLineChart.data.datasets[0].data);
     myLineChart.update();
 }
 
@@ -138,10 +148,12 @@ function getFuelHistory(){
                      }
                  }
          );
-         setTimeout(function(){getFuelHistory()}, 1000);
+          setTimeout(function(){getFuelHistory()}, 1000);
      }
 }
 
 $(document).ready(function() {
-    // getFuelHistory();
+    getFuelHistory();
+    //console.log(myLineChart.data.labels);
+    //console.log(myLineChart.data.datasets[0].data);
 });
