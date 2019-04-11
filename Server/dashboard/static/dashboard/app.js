@@ -20,14 +20,14 @@ function resetFuelLevel(vin){
              {
                  dataType: "json",
                  success: function(data) {
-                      alert("Succcessfullt reset Fuel history of VIN " +vin );
+                     // any success comments here.
                  },
                  error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Failed to reset Fuel history of VIN " +vin );
                      console.log(textStatus);
                  }
              }
      );
-    // alert("Reset Fuel Level " + vin );
 }
 
 $(document).ready(function() {
