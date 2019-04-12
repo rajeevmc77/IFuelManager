@@ -102,3 +102,20 @@ class DashboardView(View):
         else:
             return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")
         # http://localhost:8000/dashboard/getHistoryRange/?vin=MAKDF665JJ4003504
+
+    def getAjaxHistoryInRange(request):
+        vin = None
+        fromId = None
+        toId = None
+        carObdReading = None
+        if request.method == 'GET' and 'vin' in request.GET and 'fromID' in request.GET and 'toId' in request.GET:
+            vin = request.GET['vin']
+            fromID = request.GET['fromID']
+            toId = request.GET['toId']
+        if vin is not None and fromID is not None and toId is not None:
+            retval = CarOBDData.objects.filter(id__range(fromID, toId))
+            retval = json.dumps(retval)
+            return HttpResponse(retval, content_type="application/json")
+        else:
+            return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")
+        # http://localhost:8000/dashboard/getHistoryInRange/?vin=MAKDF665JJ4003504&fromID=1&toId=50
