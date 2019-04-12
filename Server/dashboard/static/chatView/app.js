@@ -141,6 +141,7 @@ function getFuelHistory(){
 }
 
 function sliderValChange(value){
+    $( "#currentSliderValue" ).html( value );
     console.log(value );
 }
 
