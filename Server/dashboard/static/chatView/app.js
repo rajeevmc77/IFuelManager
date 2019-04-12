@@ -151,8 +151,8 @@ $( function() {
   max: 10,
   value: 2,
   slide: function( event, ui ) {
-    $( "#amount" ).val( ui.value );
-    console.log(ui.value );
+   /* $( "#amount" ).val( ui.value );
+    console.log(ui.value );*/
   }
 });
 $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
