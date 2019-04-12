@@ -67,6 +67,8 @@
                                         <div class="text-xs text-info text-uppercase mb-1"> {{ profile.Make }}</div>
                                         <div class="text-xs text-info text-uppercase mb-1"> {{ profile.Model }}</div>
                                         <div class="text-xs text-info text-uppercase mb-1"> {{ profile.VIN }}</div>
+                                        <input type="button" id="liveFuelLevel" value="Live Fuel level"
+                                           onclick="getLiveFuelLevel('{{ profile.VIN  }}')"/>
                                     {% endfor %}
                                 </div>
                                 <div class="col-auto">
@@ -79,12 +81,11 @@
 
                 <hr>
 
+
                 <div class="col-xs col-xl-8 col-lg-7">
                     <div id="slider-range-max"></div>
                     <div id="currentSliderValue"></div>
                 </div>
-
-
             </div>
 
         </div>

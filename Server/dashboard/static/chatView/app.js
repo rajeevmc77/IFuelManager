@@ -141,26 +141,47 @@ function getFuelHistory(){
 }
 
 function sliderValChange(value){
+    if(fuelTimer){
+        clearTimeout(fuelTimer);
+    }
     $( "#currentSliderValue" ).html( value );
     console.log(value );
 }
 
 function initFuelSlider() {
-      fuelSlider=  $( "#slider-range-max" ).slider({
-      range: "max",
-      min: 1,
-      max: 10,
-      value: 2,
-      slide: function( event, ui ) {
-                sliderValChange(ui.value);
-                console.log(ui.value );
-      }
-    });
+
+      $.ajax("/dashboard/getHistoryRange/?vin="+jsonCarProfile[0].VIN,
+                       {
+                           dataType: "json",
+                           success: function(data) {
+
+                            fuelSlider=  $( "#slider-range-max" ).slider({
+                                 range: "max",
+                                 min: data.MinID,
+                                 max: data.MaxID,
+                                 step: 1,
+                                 value: 1,
+                                 slide: function( event, ui ) {
+                                           sliderValChange(ui.value);
+                                       }
+                               });
+
+                           },
+                           error: function(jqXHR, textStatus, errorThrown) {
+                              alert("Failed to get Fuel history Range of VIN " +vin );
+                               console.log(textStatus);
+                           }
+                       }
+               );
+
+}
+
+function getLiveFuelLevel(){
+     getFuelHistory();
 }
 
 $(document).ready(function() {
     initLineGraph();
-    getFuelHistory();
     initFuelSlider();
 });
 
