@@ -149,8 +149,6 @@ function sliderValChange(value){
         clearTimeout(fuelTimer);
     }
     $( "#currentSliderValue" ).html( value );
-    console.log(value );
-//getHistoryInRange/?vin=MAKDF665JJ4003504&fromID=1&toId=50
     $.ajax("/dashboard/getHistoryInRange/?vin="+jsonCarProfile[0].VIN +"&fromID="+(value-25)+"&toId="+(value+25),
        {
            dataType: "json",
