@@ -1,6 +1,10 @@
 {% extends 'index.html' %}
 {% load static %}
 
+{% block styles %}
+    <link href="{% static 'chatView/jquery-ui.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block content %}
 <script type="text/javascript">
     var CarFuelHistory =[];
@@ -74,6 +78,13 @@
                     </div>
                 </div>
 
+                <div class="col-xs col-xl-8 col-lg-7">
+                    <p>
+                        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                    </p>
+                    <div id="slider-range-max"></div>
+                </div>
+
 
             </div>
 
@@ -95,9 +106,12 @@
 
 </div>
 
+
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'chatView/Chart.min.js' %}"></script>
+<script src="{% static 'chatView/jquery-ui.js' %}"></script>
 <script src="{% static 'chatView/app.js' %}"></script>
 {% endblock %}
+
