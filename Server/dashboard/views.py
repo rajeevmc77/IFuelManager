@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.views import View
-from django.db.models import  Avg, Sum, StdDev
+from django.db.models import  Avg, Sum, StdDev, Max, Min
 import json
 
 from obdService.models import CarOBDData, CarProfile
@@ -88,3 +88,17 @@ class DashboardView(View):
             return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")
         #http://localhost:8000/dashboard/getFuelHistory/?vin=MAKDF665JJ4003504
 
+    def getAjaxHistoryRange(request):
+        vin = None
+        carObdReading = None
+        if request.method == 'GET' and 'vin' in request.GET:
+            vin = request.GET['vin']
+        if vin is not None:
+            carObdReading = list(
+                CarOBDData.objects.filter(VIN=vin).values_list('id', 'FuelTankLevel').order_by('-created_at')[:50])
+            #max_rating = App.objects.all().aggregate(Max('rating'))['rating__max']
+            carObdReading = json.dumps(carObdReading)
+            return HttpResponse(carObdReading, content_type="application/json")
+        else:
+            return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")
+        # http://localhost:8000/dashboard/getFuelHistory/?vin=MAKDF665JJ4003504
