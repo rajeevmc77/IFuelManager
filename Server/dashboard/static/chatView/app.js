@@ -102,27 +102,36 @@ function initLineGraph(){
 
 }
 
-function refreshChart(data, labels){
-
+function refreshLiveChart(){
     var diff = labels[0] - myLineChart.data.labels[0];
     for (  ; diff>=0; diff--){
         myLineChart.data.labels.shift();
         myLineChart.data.datasets[0].data.shift();
         myLineChart.data.labels.push(labels[labels.length - diff - 1]);
         myLineChart.data.datasets[0].data.push(data[data.length - diff - 1]);
-
     }
     myLineChart.update();
 }
 
-function reloadChart(data){
+function refreshRangeChart(){
+
+    myLineChart.data.labels = [];
+    myLineChart.data.datasets[0].data =[];
+
+    for (  index=0; index < labels.length-1; index++){
+        myLineChart.data.labels.push(labels[index]);
+        myLineChart.data.datasets[0].data.push(data[index]);
+    }
+    myLineChart.update();
+}
+
+function refreshLabelsData(data){
         labels = data.map(function(value, index){
                 return value[0];
         });
         data = data.map(function(value, index){
             return value[1];
         });
-        refreshChart(data, labels);
 }
 
 function getFuelHistory(){
@@ -131,8 +140,9 @@ function getFuelHistory(){
                  {
                      dataType: "json",
                      success: function(data) {
-                         data.reverse();
-                         reloadChart(data);
+                        data.reverse();
+                        refreshLabelsData(data);
+                        refreshLiveChart()
                      },
                      error: function(jqXHR, textStatus, errorThrown) {
                         alert("Failed to get Fuel history of VIN " +vin );
@@ -153,8 +163,8 @@ function sliderValChange(value){
        {
            dataType: "json",
            success: function(data) {
-                 console.log(data);
-                 reloadChart(data);
+                 refreshLabelsData(data);
+                 refreshRangeChart();
            },
            error: function(jqXHR, textStatus, errorThrown) {
               alert("Failed to get Fuel history Range of VIN " +vin );
