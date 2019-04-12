@@ -94,11 +94,11 @@ class DashboardView(View):
         if request.method == 'GET' and 'vin' in request.GET:
             vin = request.GET['vin']
         if vin is not None:
-            carObdReading = list(
-                CarOBDData.objects.filter(VIN=vin).values_list('id', 'FuelTankLevel').order_by('-created_at')[:50])
-            #max_rating = App.objects.all().aggregate(Max('rating'))['rating__max']
-            carObdReading = json.dumps(carObdReading)
-            return HttpResponse(carObdReading, content_type="application/json")
+            max_id = CarOBDData.objects.all().aggregate(Max('id'))['id__max']
+            min_id = CarOBDData.objects.all().aggregate(Min('id'))['id__min']
+            retval = {"MinID": min_id, "MaxID": max_id}
+            retval = json.dumps(retval)
+            return HttpResponse(retval, content_type="application/json")
         else:
             return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")
-        # http://localhost:8000/dashboard/getFuelHistory/?vin=MAKDF665JJ4003504
+        # http://localhost:8000/dashboard/getHistoryRange/?vin=MAKDF665JJ4003504
