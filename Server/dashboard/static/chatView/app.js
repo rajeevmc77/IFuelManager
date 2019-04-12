@@ -1,5 +1,7 @@
 var myLineChart;
 var jsonCarProfile;
+var fuelTimer ;
+var fuelSlider;
 
 var labels = CarFuelHistory.map(function(value, index){
     return value[0];
@@ -134,26 +136,32 @@ function getFuelHistory(){
                      }
                  }
          );
-         setTimeout(function(){getFuelHistory()}, 1000);
+         fuelTimer = setTimeout(function(){getFuelHistory()}, 3000); // poll in 3 seconds
      }
+}
+
+function sliderValChange(value){
+    console.log(value );
+}
+
+function initFuelSlider() {
+      fuelSlider=  $( "#slider-range-max" ).slider({
+      range: "max",
+      min: 1,
+      max: 10,
+      value: 2,
+      slide: function( event, ui ) {
+                sliderValChange(ui.value);
+                console.log(ui.value );
+      }
+    });
 }
 
 $(document).ready(function() {
     initLineGraph();
     getFuelHistory();
+    initFuelSlider();
 });
 
-var x ;
-$( function() {
- x =  $( "#slider-range-max" ).slider({
-  range: "max",
-  min: 1,
-  max: 10,
-  value: 2,
-  slide: function( event, ui ) {
-   /* $( "#amount" ).val( ui.value );
-    console.log(ui.value );*/
-  }
-});
-$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
-} );
+
+
