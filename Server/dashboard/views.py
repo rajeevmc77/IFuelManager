@@ -110,10 +110,10 @@ class DashboardView(View):
         carObdReading = None
         if request.method == 'GET' and 'vin' in request.GET and 'fromID' in request.GET and 'toId' in request.GET:
             vin = request.GET['vin']
-            fromID = request.GET['fromID']
-            toId = request.GET['toId']
+            fromID = int(request.GET['fromID'])
+            toId = int(request.GET['toId'])
         if vin is not None and fromID is not None and toId is not None:
-            retval = CarOBDData.objects.filter(id__range(fromID, toId))
+            retval = list(CarOBDData.objects.values_list('id', 'FuelTankLevel').filter(id__range=(fromID, toId)).order_by('-created_at'))
             retval = json.dumps(retval)
             return HttpResponse(retval, content_type="application/json")
         else:

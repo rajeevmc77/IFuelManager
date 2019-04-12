@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e312ca7d-616b-4061-a8f3-b668a777faee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/dashboard/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,15 +16,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dashboard/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="120" column="99" selection-start-line="120" selection-start-column="99" selection-end-line="120" selection-end-column="99" />
+            <state relative-caret-position="199">
+              <caret line="115" column="137" selection-start-line="115" selection-start-column="137" selection-end-line="115" selection-end-column="137" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#307#1792#0" />
-                <element signature="e#1830#2772#0" />
-                <element signature="e#2814#3546#0" />
-                <element signature="e#3590#4276#0" />
-                <element signature="e#4334#5002#0" />
               </folding>
             </state>
           </provider>
@@ -33,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dashboard/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
+            <state relative-caret-position="165">
               <caret line="18" column="27" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="27" />
               <folding>
                 <element signature="e#1#33#0" expanded="true" />
@@ -45,7 +40,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dashboard/templates/dashboard/FuelChart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
+            <state relative-caret-position="885">
               <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="16" />
               <folding>
                 <element signature="n#script#0;n#div#0;n#div#0;n#div#0;n#!!top" />
@@ -58,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="152" column="32" lean-forward="true" selection-start-line="152" selection-start-column="32" selection-end-line="152" selection-end-column="32" />
+            <state relative-caret-position="2280">
+              <caret line="152" column="32" selection-start-line="152" selection-start-column="32" selection-end-line="152" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -106,10 +101,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1708" />
-    <option name="y" value="141" />
-    <option name="width" value="1024" />
-    <option name="height" value="482" />
+    <option name="x" value="170" />
+    <option name="y" value="109" />
+    <option name="width" value="1026" />
+    <option name="height" value="511" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -118,7 +113,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -145,6 +139,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -218,16 +213,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1366" y="-4" width="1366" height="772" extended-state="6" />
+    <frame x="-1" y="-4" width="1368" height="710" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49557522" visible="true" weight="0.2060606" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49557522" visible="true" weight="0.2090909" />
       <window_info id="Structure" order="1" sideWeight="0.50442475" side_tool="true" weight="0.2439394" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49924242" visible="true" weight="0.245142" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40807176" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924242" weight="0.245142" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.40759075" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32838285" />
@@ -246,6 +241,15 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dashboard/views.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="carProfile[0]['Make']" language="Python" />
@@ -483,21 +487,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
+    <entry file="file://$PROJECT_DIR$/dashboard/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="152" column="32" lean-forward="true" selection-start-line="152" selection-start-column="32" selection-end-line="152" selection-end-column="32" />
+        <state relative-caret-position="165">
+          <caret line="18" column="27" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="27" />
+          <folding>
+            <element signature="e#1#33#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dashboard/templates/dashboard/FuelChart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
+        <state relative-caret-position="885">
           <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="16" />
           <folding>
             <element signature="n#script#0;n#div#0;n#div#0;n#div#0;n#!!top" />
             <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2280">
+          <caret line="152" column="32" selection-start-line="152" selection-start-column="32" selection-end-line="152" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -508,27 +522,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="27" />
-          <folding>
-            <element signature="e#1#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dashboard/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="120" column="99" selection-start-line="120" selection-start-column="99" selection-end-line="120" selection-end-column="99" />
+        <state relative-caret-position="199">
+          <caret line="115" column="137" selection-start-line="115" selection-start-column="137" selection-end-line="115" selection-end-column="137" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#307#1792#0" />
-            <element signature="e#1830#2772#0" />
-            <element signature="e#2814#3546#0" />
-            <element signature="e#3590#4276#0" />
-            <element signature="e#4334#5002#0" />
           </folding>
         </state>
       </provider>
