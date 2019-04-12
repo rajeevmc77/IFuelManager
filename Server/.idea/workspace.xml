@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e312ca7d-616b-4061-a8f3-b668a777faee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/static/chatView/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/static/chatView/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/dashboard/FuelChart.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/dashboard/FuelChart.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +15,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dashboard/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="103" column="57" selection-start-line="103" selection-start-column="42" selection-end-line="103" selection-end-column="57" />
+            <state relative-caret-position="400">
+              <caret line="120" column="99" lean-forward="true" selection-start-line="120" selection-start-column="42" selection-end-line="120" selection-end-column="99" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -53,10 +51,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="144" column="32" selection-start-line="144" selection-start-column="32" selection-end-line="144" selection-end-column="32" />
+            <state relative-caret-position="210">
+              <caret line="156" column="36" selection-start-line="156" selection-start-column="36" selection-end-line="156" selection-end-column="36" />
               <folding>
                 <element signature="e#0#4537#0" />
+                <element signature="e#0#4537#0" />
+                <element signature="e#0#6340#0" />
                 <element signature="e#0#4537#0" />
               </folding>
             </state>
@@ -511,16 +511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="103" column="57" selection-start-line="103" selection-start-column="42" selection-end-line="103" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dashboard/templates/dashboard/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -545,12 +535,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="120" column="99" lean-forward="true" selection-start-line="120" selection-start-column="42" selection-end-line="120" selection-end-column="99" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dashboard/static/chatView/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="144" column="32" selection-start-line="144" selection-start-column="32" selection-end-line="144" selection-end-column="32" />
+        <state relative-caret-position="210">
+          <caret line="156" column="36" selection-start-line="156" selection-start-column="36" selection-end-line="156" selection-end-column="36" />
           <folding>
             <element signature="e#0#4537#0" />
+            <element signature="e#0#4537#0" />
+            <element signature="e#0#6340#0" />
             <element signature="e#0#4537#0" />
           </folding>
         </state>

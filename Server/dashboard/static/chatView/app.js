@@ -115,20 +115,24 @@ function refreshChart(data, labels){
     myLineChart.update();
 }
 
+function reloadChart(data){
+        data.reverse();
+        labels = data.map(function(value, index){
+                return value[0];
+        });
+        data = data.map(function(value, index){
+            return value[1];
+        });
+        refreshChart(data, labels);
+}
+
 function getFuelHistory(){
     if(jsonCarProfile && jsonCarProfile.length > 0){
          $.ajax("/dashboard/getFuelHistory/?vin="+jsonCarProfile[0].VIN,
                  {
                      dataType: "json",
                      success: function(data) {
-                        data.reverse();
-                        labels = data.map(function(value, index){
-                                return value[0];
-                        });
-                        data = data.map(function(value, index){
-                            return value[1];
-                        });
-                        refreshChart(data, labels);
+                        reloadChart(data);
                      },
                      error: function(jqXHR, textStatus, errorThrown) {
                         alert("Failed to get Fuel history of VIN " +vin );
@@ -146,33 +150,46 @@ function sliderValChange(value){
     }
     $( "#currentSliderValue" ).html( value );
     console.log(value );
+//getHistoryInRange/?vin=MAKDF665JJ4003504&fromID=1&toId=50
+    $.ajax("/dashboard/getHistoryInRange/?vin="+jsonCarProfile[0].VIN +"&fromID="+(value-25)+"&toId="+(value+25),
+       {
+           dataType: "json",
+           success: function(data) {
+                 reloadChart(data);
+           },
+           error: function(jqXHR, textStatus, errorThrown) {
+              alert("Failed to get Fuel history Range of VIN " +vin );
+               console.log(textStatus);
+           }
+       }
+    );
 }
 
 function initFuelSlider() {
 
       $.ajax("/dashboard/getHistoryRange/?vin="+jsonCarProfile[0].VIN,
-                       {
-                           dataType: "json",
-                           success: function(data) {
+           {
+               dataType: "json",
+               success: function(data) {
 
-                            fuelSlider=  $( "#slider-range-max" ).slider({
-                                 range: "max",
-                                 min: data.MinID,
-                                 max: data.MaxID,
-                                 step: 1,
-                                 value: 1,
-                                 slide: function( event, ui ) {
-                                           sliderValChange(ui.value);
-                                       }
-                               });
-
-                           },
-                           error: function(jqXHR, textStatus, errorThrown) {
-                              alert("Failed to get Fuel history Range of VIN " +vin );
-                               console.log(textStatus);
+                fuelSlider=  $( "#slider-range-max" ).slider({
+                     range: "max",
+                     min: data.MinID,
+                     max: data.MaxID,
+                     step: 1,
+                     value: 1,
+                     slide: function( event, ui ) {
+                               sliderValChange(ui.value);
                            }
-                       }
-               );
+                   });
+
+               },
+               error: function(jqXHR, textStatus, errorThrown) {
+                  alert("Failed to get Fuel history Range of VIN " +vin );
+                   console.log(textStatus);
+               }
+           }
+      );
 
 }
 
