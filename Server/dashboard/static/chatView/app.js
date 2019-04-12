@@ -116,7 +116,6 @@ function refreshChart(data, labels){
 }
 
 function reloadChart(data){
-        data.reverse();
         labels = data.map(function(value, index){
                 return value[0];
         });
@@ -132,7 +131,8 @@ function getFuelHistory(){
                  {
                      dataType: "json",
                      success: function(data) {
-                        reloadChart(data);
+                         data.reverse();
+                         reloadChart(data);
                      },
                      error: function(jqXHR, textStatus, errorThrown) {
                         alert("Failed to get Fuel history of VIN " +vin );
@@ -153,6 +153,7 @@ function sliderValChange(value){
        {
            dataType: "json",
            success: function(data) {
+                 console.log(data);
                  reloadChart(data);
            },
            error: function(jqXHR, textStatus, errorThrown) {
