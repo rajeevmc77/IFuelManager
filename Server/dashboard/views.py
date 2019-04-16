@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.views import View
 from django.db.models import  Avg, Sum, StdDev, Max, Min
 import json
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 from obdService.models import CarOBDData, CarProfile
 # Create your views here.
@@ -113,8 +115,9 @@ class DashboardView(View):
             fromID = int(request.GET['fromID'])
             toId = int(request.GET['toId'])
         if vin is not None and fromID is not None and toId is not None:
-            retval = list(CarOBDData.objects.values_list('id', 'FuelTankLevel').filter(id__range=(fromID, toId)).order_by('created_at'))
-            retval = json.dumps(retval)
+            retval = list(CarOBDData.objects.values_list('id', 'FuelTankLevel','created_at').filter(id__range=(fromID, toId)).order_by('created_at'))
+            #retval = json.dumps(retval)
+            retval = json.dumps(retval, cls=DjangoJSONEncoder)
             return HttpResponse(retval, content_type="application/json")
         else:
             return HttpResponse(json.dumps("{'ResetStatus':'Failed'}"), content_type="application/json")

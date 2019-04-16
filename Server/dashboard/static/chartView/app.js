@@ -2,6 +2,8 @@ var myLineChart;
 var jsonCarProfile;
 var fuelTimer ;
 var fuelSlider;
+var fuelSliderMinValue,fuelSliderMaxValue;
+
 
 var labels = CarFuelHistory.map(function(value, index){
     return value[0];
@@ -159,10 +161,21 @@ function sliderValChange(value){
         clearTimeout(fuelTimer);
     }
     $( "#currentSliderValue" ).html( value );
-    $.ajax("/dashboard/getHistoryInRange/?vin="+jsonCarProfile[0].VIN +"&fromID="+(value-25)+"&toId="+(value+25),
+    var sliderOverFlow =  fuelSliderMaxValue - ( value + 50 ) ;
+    var sliderLowerBound , sliderUpperBound;
+    sliderLowerBound = (sliderOverFlow >=  0 ) ? value : value + sliderOverFlow ;
+    sliderUpperBound = (sliderOverFlow >=  0 ) ? value + 50 : fuelSliderMaxValue;
+
+    // var log = " value " + value +" sliderOverFlow " + sliderOverFlow + " sliderLowerBound " + sliderLowerBound + " sliderUpperBound " + sliderUpperBound;
+
+    // console.log(log);
+
+
+    $.ajax("/dashboard/getHistoryInRange/?vin="+jsonCarProfile[0].VIN +"&fromID="+(sliderLowerBound)+"&toId="+(sliderUpperBound),
        {
            dataType: "json",
            success: function(data) {
+           console.log(data);
                  refreshLabelsData(data);
                  refreshRangeChart();
            },
@@ -180,6 +193,9 @@ function initFuelSlider() {
            {
                dataType: "json",
                success: function(data) {
+
+                fuelSliderMinValue = data.MinID;
+                fuelSliderMaxValue = data.MaxID;
 
                 fuelSlider=  $( "#slider-range-max" ).slider({
                      range: "max",
