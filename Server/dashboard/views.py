@@ -32,7 +32,6 @@ class DashboardView(View):
 
         return render(request, "dashboard/dashboard.html",
                       {
-                        #'CarOBDData': CarOBDData.objects.all(),
                         'CarFuelHistory': carsHistry,
                         'jsonCarFuelHistory' : json.dumps(carsHistry)
                       })
@@ -116,7 +115,6 @@ class DashboardView(View):
             toId = int(request.GET['toId'])
         if vin is not None and fromID is not None and toId is not None:
             retval = list(CarOBDData.objects.values_list('id', 'FuelTankLevel','created_at').filter(id__range=(fromID, toId)).order_by('created_at'))
-            #retval = json.dumps(retval)
             retval = json.dumps(retval, cls=DjangoJSONEncoder)
             return HttpResponse(retval, content_type="application/json")
         else:

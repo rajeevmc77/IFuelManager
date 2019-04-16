@@ -3,6 +3,7 @@ var jsonCarProfile;
 var fuelTimer ;
 var fuelSlider;
 var fuelSliderMinValue,fuelSliderMaxValue;
+var prevAjaxRequest;
 
 
 var labels = CarFuelHistory.map(function(value, index){
@@ -12,6 +13,8 @@ var labels = CarFuelHistory.map(function(value, index){
 var data = CarFuelHistory.map(function(value, index){
     return value[1];
 });
+
+var carFuelHistoryTime = [ ];
 
 function initLineGraph(){
 
@@ -128,12 +131,16 @@ function refreshRangeChart(){
 }
 
 function refreshLabelsData(data){
+        carFuelHistoryTime = data.map(function(value, index){
+            return new  Date(value[2]);
+        });
         labels = data.map(function(value, index){
-                return value[0];
+            return value[0];
         });
         data = data.map(function(value, index){
             return value[1];
         });
+
 }
 
 function getFuelHistory(){
@@ -160,24 +167,30 @@ function sliderValChange(value){
     if(fuelTimer){
         clearTimeout(fuelTimer);
     }
-    $( "#currentSliderValue" ).html( value );
     var sliderOverFlow =  fuelSliderMaxValue - ( value + 50 ) ;
     var sliderLowerBound , sliderUpperBound;
     sliderLowerBound = (sliderOverFlow >=  0 ) ? value : value + sliderOverFlow ;
     sliderUpperBound = (sliderOverFlow >=  0 ) ? value + 50 : fuelSliderMaxValue;
 
-    // var log = " value " + value +" sliderOverFlow " + sliderOverFlow + " sliderLowerBound " + sliderLowerBound + " sliderUpperBound " + sliderUpperBound;
-
-    // console.log(log);
-
-
-    $.ajax("/dashboard/getHistoryInRange/?vin="+jsonCarProfile[0].VIN +"&fromID="+(sliderLowerBound)+"&toId="+(sliderUpperBound),
+   /* if(prevAjaxRequest){
+        prevAjaxRequest.abort();
+    }*/
+    prevAjaxRequest = $.ajax("/dashboard/getHistoryInRange/?vin="+jsonCarProfile[0].VIN +"&fromID="+(sliderLowerBound)+"&toId="+(sliderUpperBound),
        {
            dataType: "json",
            success: function(data) {
-           console.log(data);
+                 var fromTime= " ", toTime= " ";
                  refreshLabelsData(data);
                  refreshRangeChart();
+                 if(carFuelHistoryTime){
+                    len = carFuelHistoryTime.length;
+                    if( len > 0){
+                        fromTime = carFuelHistoryTime[0].toLocaleString();
+                        toTime = carFuelHistoryTime[len - 1].toLocaleString();
+                    }
+                 }
+                 var sliderMessage = "<b> Tick:" + value +"  From: " + fromTime + "  To: " + toTime + "</b>"
+                 $( "#currentSliderValue" ).html( sliderMessage );
            },
            error: function(jqXHR, textStatus, errorThrown) {
               alert("Failed to get Fuel history Range of VIN " +vin );
@@ -219,7 +232,10 @@ function initFuelSlider() {
 }
 
 function getLiveFuelLevel(){
-     getFuelHistory();
+    if(fuelTimer){
+        clearTimeout(fuelTimer);
+    }
+    getFuelHistory();
 }
 
 $(document).ready(function() {
