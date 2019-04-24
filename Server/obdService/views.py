@@ -9,6 +9,10 @@ from rest_framework import status
 import json
 import datetime as dt
 import pytz
+from pytz import timezone
+import time
+
+
 
 from .models import CarOBDData,  CarProfile
 from .serializers import CarOBDDataSerializer
@@ -85,7 +89,8 @@ class CarOBDDataView(APIView):
             now = utc.localize(dt.datetime.now())
             if not lastKnownReadTime.tzinfo:
                 lastKnownReadTime=utc.localize(lastKnownReadTime)
-            secondsElapsed = (now - lastKnownReadTime ).total_seconds()
+            secondsElapsed = (now - lastKnownReadTime ).total_seconds() - self.localtoUTCDiffInSeconds()
+            print(" Now it is - {} lastKnownReadTime is - {} secondsElapsed is - {} ".format( now, lastKnownReadTime, secondsElapsed ))
             adjustmentMultiplier = 0
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1
@@ -104,3 +109,11 @@ class CarOBDDataView(APIView):
             lastfuelTankLevel = fuelreadingSamples[0][0]
             data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - float(data["FuelTankLevel"])) > 0.01 else 0
         return data
+
+    def localtoUTCDiffInSeconds(self):
+        now = dt.datetime.now()
+        tz = timezone('Asia/Kolkata')
+        utc = timezone('UTC')
+        utc.localize(dt.datetime.now())
+        delta = (utc.localize(now) - tz.localize(now)).total_seconds()
+        return delta

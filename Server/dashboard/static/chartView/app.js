@@ -159,7 +159,7 @@ function getFuelHistory(){
                      }
                  }
          );
-         fuelTimer = setTimeout(function(){getFuelHistory()}, 3000); // poll in 3 seconds
+         fuelTimer = setTimeout(function(){getFuelHistory()}, 1000); // poll in 1000 ms
      }
 }
 
