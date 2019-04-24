@@ -118,9 +118,6 @@ function refreshLiveChart(){
         myLineChart.data.datasets[0].data.shift();
         myLineChart.data.labels.push(globalChartData.labels[globalChartData.labels.length - diff - 1]);
         myLineChart.data.datasets[0].data.push(globalChartData.data[globalChartData.data.length - diff - 1]);
-        /*console.log(diff ) ;
-        console.log( globalChartData.labels ) ;
-        console.log( globalChartData.data ) ;*/
     }
     myLineChart.update();
 }
