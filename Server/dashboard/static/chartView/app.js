@@ -5,7 +5,6 @@ var fuelSlider;
 var fuelSliderMinValue,fuelSliderMaxValue;
 var prevAjaxRequest;
 
-
 var labels = CarFuelHistory.map(function(value, index){
     return value[0];
 });
@@ -13,6 +12,11 @@ var labels = CarFuelHistory.map(function(value, index){
 var data = CarFuelHistory.map(function(value, index){
     return value[1];
 });
+
+var globalChartData = {
+    "data": data,
+    "labels" :labels
+};
 
 var carFuelHistoryTime = [ ];
 
@@ -108,12 +112,15 @@ function initLineGraph(){
 }
 
 function refreshLiveChart(){
-    var diff = labels[0] - myLineChart.data.labels[0];
+    var diff = globalChartData.labels[0] - myLineChart.data.labels[0];
     for (  ; diff>=0; diff--){
         myLineChart.data.labels.shift();
         myLineChart.data.datasets[0].data.shift();
-        myLineChart.data.labels.push(labels[labels.length - diff - 1]);
-        myLineChart.data.datasets[0].data.push(data[data.length - diff - 1]);
+        myLineChart.data.labels.push(globalChartData.labels[globalChartData.labels.length - diff - 1]);
+        myLineChart.data.datasets[0].data.push(globalChartData.data[globalChartData.data.length - diff - 1]);
+        /*console.log(diff ) ;
+        console.log( globalChartData.labels ) ;
+        console.log( globalChartData.data ) ;*/
     }
     myLineChart.update();
 }
@@ -123,23 +130,25 @@ function refreshRangeChart(){
     myLineChart.data.labels = [];
     myLineChart.data.datasets[0].data =[];
 
-    for (  index=0; index < labels.length-1; index++){
-        myLineChart.data.labels.push(labels[index]);
-        myLineChart.data.datasets[0].data.push(data[index]);
+    for (  index=0; index < globalChartData.labels.length-1; index++){
+        myLineChart.data.labels.push(globalChartData.labels[index]);
+        myLineChart.data.datasets[0].data.push(globalChartData.data[index]);
     }
     myLineChart.update();
 }
 
-function refreshLabelsData(data){
-        carFuelHistoryTime = data.map(function(value, index){
+function refreshLabelsData(carData){
+        carFuelHistoryTime = carData.map(function(value, index){
             return new  Date(value[2]);
         });
-        labels = data.map(function(value, index){
+        labels = carData.map(function(value, index){
             return value[0];
         });
-        data = data.map(function(value, index){
+        data = carData.map(function(value, index){
             return value[1];
         });
+        globalChartData.data = data;
+        globalChartData.labels = labels;
 
 }
 
