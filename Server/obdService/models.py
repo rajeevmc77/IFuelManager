@@ -37,18 +37,14 @@ class CarOBDData(models.Model):
     Speed = models.FloatField(null=False, default=0)
     # Fuel Level 0 - 100 %
     FuelTankLevel = models.FloatField(null=False, default=0)
-    # User Profile
+    # Mass Air Flow level
+    MAFLevel = models.FloatField(null=False, default=0)
     # profile = models.ForeignKey(CarProfile, on_delete=models.CASCADE, default=1)
     # object created Time
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    # object updated Time
-    #updated_at = models.DateTimeField(auto_now=True, blank=True)
-    #usage Trend for the last 10 samples
-    # FuelUsageTrend = models.FloatField(null=False, default=0)
-    # seconds Elapsed from Last Read
-    # SecondsElapsed = models.FloatField(null=False, default=1)
-    # FuelUsageDeviation = models.FloatField(null=False, default=0)
+    # PossibleFuelLeak
     PossibleFuelLeak = models.IntegerField(null=False, default=0)
+
 
 
     def __str__(self):

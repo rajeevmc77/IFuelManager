@@ -51,7 +51,6 @@ class CarOBDDataView(APIView):
     def post(self, request, format=None):
         data = self.getJSON(request)
         data = self.setFuelLevelData(data)
-        #data = self.setFuelUsageTrend(data)
         data = self.setFuelUsageSpikes(data)
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
@@ -90,7 +89,7 @@ class CarOBDDataView(APIView):
             if not lastKnownReadTime.tzinfo:
                 lastKnownReadTime=utc.localize(lastKnownReadTime)
             secondsElapsed = (now - lastKnownReadTime ).total_seconds() - self.localtoUTCDiffInSeconds()
-            print(" Now it is - {} lastKnownReadTime is - {} secondsElapsed is - {} ".format( now, lastKnownReadTime, secondsElapsed ))
+            # print(" Now it is - {} lastKnownReadTime is - {} secondsElapsed is - {} ".format( now, lastKnownReadTime, secondsElapsed ))
             adjustmentMultiplier = 0
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1

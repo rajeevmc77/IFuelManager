@@ -5,6 +5,6 @@ from .models import CarOBDData
 class CarOBDDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarOBDData
-        fields = ("VIN", "Speed", "RPM", "FuelTankLevel" ,"PossibleFuelLeak")  #"FuelUsageTrend" , "FuelUsageDeviation") # , "SecondsElapsed")
+        fields = ("VIN", "Speed", "RPM", "FuelTankLevel", "PossibleFuelLeak", "MAFLevel")
 
 
