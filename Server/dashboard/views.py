@@ -58,6 +58,12 @@ class DashboardView(View):
                           'jsonCarProfile': jsonCarProfile
                       })
 
+    def adminView(request):
+
+        return render(request, "dashboard/AdminView.html",
+                      {
+                      })
+
     def resetFuelData(request):
         vin = None
         carObdReading = None

@@ -13,6 +13,7 @@ urlpatterns = [
     # path('', include('obdService.urls'))
     path('', DashboardView.as_view(), name="DashboardView"),
     path('chartView/', DashboardView.chartView),
+    path('adminView/', DashboardView.adminView),
     path('resetFuelLevel/', DashboardView.resetFuelData),
     path('getFuelHistory/', DashboardView.getAjaxFuelData),
     path('getHistoryRange/',DashboardView.getAjaxHistoryRange),
