@@ -52,6 +52,7 @@ class CarOBDDataView(APIView):
         data = self.getJSON(request)
         data = self.setFuelLevelData(data)
         data = self.setFuelUsageSpikes(data)
+        print(" RPM - {} MAFLevel - {} VIN is - {} ".format(data["RPM"], data["MAFLevel"], data["VIN"] ))
         serializer = CarOBDDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -89,14 +90,13 @@ class CarOBDDataView(APIView):
             if not lastKnownReadTime.tzinfo:
                 lastKnownReadTime=utc.localize(lastKnownReadTime)
             secondsElapsed = (now - lastKnownReadTime ).total_seconds() - self.localtoUTCDiffInSeconds()
-            # print(" Now it is - {} lastKnownReadTime is - {} secondsElapsed is - {} ".format( now, lastKnownReadTime, secondsElapsed ))
             adjustmentMultiplier = 0
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1
-            projectedRemainingFuel = previousReading - ((self.getFuelConsumed(data) * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
+            projectedRemainingFuel = previousReading - ((self.getFuelConsumed(data) * adjustmentMultiplier * secondsElapsed)/ (fuelTankVolume *1000))
         if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = projectedRemainingFuel
-        return da
+        return data
 
     def getFuelConsumed(self, data):
         """
@@ -119,7 +119,7 @@ class CarOBDDataView(APIView):
         fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1]
         if fuelreadingSamples:
             lastfuelTankLevel = fuelreadingSamples[0][0]
-            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - float(data["FuelTankLevel"])) > 0.1 else 0
+            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - float(data["FuelTankLevel"])) > 0.01 else 0
         return data
 
     def localtoUTCDiffInSeconds(self):
