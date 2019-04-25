@@ -93,10 +93,23 @@ class CarOBDDataView(APIView):
             adjustmentMultiplier = 0
             if secondsElapsed < 60:
                 adjustmentMultiplier = 1
-            projectedRemainingFuel = previousReading - ((0.0005 * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
+            projectedRemainingFuel = previousReading - ((self.getFuelConsumed(data) * adjustmentMultiplier * secondsElapsed)/ fuelTankVolume)
         if int(data['FuelTankLevel']) == 0:
             data['FuelTankLevel'] = projectedRemainingFuel
-        return data
+        return da
+
+    def getFuelConsumed(self, data):
+        """
+        Get the Fuel Consumed per second Based on MAF
+        :param data:
+        :return:
+        """
+        fuelConsumed = 0.0005
+        if data['MAFLevel']:
+            maf = float(data['MAFLevel'])
+            if maf > 0 :
+                fuelConsumed = maf/ 14.7
+        return fuelConsumed
 
     def setFuelUsageSpikes(self, data):
         """
@@ -106,7 +119,7 @@ class CarOBDDataView(APIView):
         fuelreadingSamples = CarOBDData.objects.filter(VIN=data['VIN']).values_list('FuelTankLevel').order_by('-created_at')[:1]
         if fuelreadingSamples:
             lastfuelTankLevel = fuelreadingSamples[0][0]
-            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - float(data["FuelTankLevel"])) > 0.01 else 0
+            data["PossibleFuelLeak"] = 1 if (lastfuelTankLevel - float(data["FuelTankLevel"])) > 0.1 else 0
         return data
 
     def localtoUTCDiffInSeconds(self):
