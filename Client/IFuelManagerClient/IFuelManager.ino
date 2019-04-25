@@ -41,7 +41,7 @@ PID_POLLING_INFO obdData[]= {
   {PID_SPEED, 1, "Speed" },
   {PID_RPM, 1, "RPM"},
   {PID_FUEL_LEVEL, 1, "FuelTankLevel"},
-  {PID_MAF_FLOW, 1, "MAFLevel"},
+  {PID_MAF_FLOW, 1, "MAFLevel"}  
   // {PID_ENGINE_LOAD, 1,"EngineLoad"},
   // {PID_FUEL_PRESSURE, 2, "FuelPressure"},
   // {PID_TIMING_ADVANCE, 2,"TimingAdvance"},
